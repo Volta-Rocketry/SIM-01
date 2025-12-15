@@ -1,0 +1,63 @@
+{
+    "airframe": {
+        "name": "IREC_version1",
+        "coordinate_system_orientation": "nose_to_tail",
+        "radius": 0.0875,
+        "mass": 20.272,
+        "inertia": [0.18, 0.18, 35.84, 0.0, 0.0, 0.0],
+        "power_off_drag": "csv_files/aerodynamic/IREC_version1_power_off_drag_curve.csv",
+        "power_on_drag": "csv_files/aerodynamic/IREC_version1_power_on_drag_curve.csv",
+        "center_of_mass_without_motor": 1.53,
+        "rocket_length": 3.09
+    },
+
+    "nosecone": {
+        "name": "Nose Cone Von Karman 5:1",
+        "kind": "Von Karman",
+        "length": 0.875,
+        "base_radius": 0.0875,
+        "position": 0.0
+    },
+
+    "rail_buttons": {
+        "name": "Rail Button",
+        "angular_position": 45,
+        "distance": 0.775,        
+        "upper_position": 2.24
+    },
+
+    "fins": {    
+        "name": "Trapezoidal Fins",
+        "number": 4,
+        "section": "airfoil",
+        "position": 2.78,
+        
+        "cant_angle": 0.0,
+        "root_chord": 0.28,
+        "tip_chord": 0.08,
+        "span": 0.175,
+        "sweep_length": 0.24
+    },
+
+    "parachutes": {
+        "main": {
+            "area": 19.446910915062936,
+            "cd": 1.7,
+            "cds": 33.059748555606994,
+            "deploy_altitude": 450.0,
+            "deploy_delay": 0.0,
+            "deploy_event": "altitude",
+            "name": "SRAD Main Parachute + Deployment Bag (113.1 g)"
+        },
+        "drogue": {
+            "area": 0.805951247935396,
+            "cd": 1.7,
+            "cds": 1.370117121490173,
+            "deploy_altitude": null,
+            "deploy_delay": 0.0,
+            "deploy_event": "apogee",
+            "name": "SRAD Drogue Parachute + Deployment Bag (42.6 g)"
+        }
+    }
+
+}
