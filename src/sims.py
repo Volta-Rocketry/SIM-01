@@ -6,7 +6,7 @@ from itertools import product
 from scipy.signal import butter, filtfilt
 from scipy.interpolate import interp1d
 from rocketpy import Environment, Flight, Rocket, SolidMotor
-from adjust_parameters import eval_adjust_motor_parameters
+from src.adjust_parameters import eval_adjust_motor_parameters
 
 class File_simulation():
     def __init__(self, file_name, motor_name):
