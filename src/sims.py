@@ -9,7 +9,28 @@ from rocketpy import Environment, Flight, Rocket, SolidMotor
 from src.adjust_parameters import eval_adjust_motor_parameters
 
 class File_simulation():
+    """
+    Core orchestration class for rocket flight simulations.
+
+    This class is responsible for loading rocket and motor configurations,
+    constructing the corresponding RocketPy objects, and executing single
+    or multiple flight simulations in a standardized manner.
+
+    It acts as a high-level interface over RocketPy, allowing contributors
+    to run simulations without interacting directly with low-level APIs.
+    """
     def __init__(self, file_name, motor_name):
+        """
+        Initialize the simulation object and construct the rocket.
+
+        This method validates the provided rocket and motor identifiers,
+        loads their configuration files, and builds the RocketPy Rocket
+        and SolidMotor objects.
+
+        :param file_name: Identifier of the rocket configuration to load.
+        :param motor_name: Identifier of the motor configuration to load.
+        :raises ValueError: If the rocket or motor is not supported.
+        """
         self.file_name = file_name
         self.motor_name = motor_name
         self.file_status = False
@@ -42,6 +63,12 @@ class File_simulation():
         self.create_rocket()
 
     def verify_file(self):
+        """
+        Verify that the requested rocket configuration is supported.
+
+        :return: True if the rocket configuration is supported.
+        :raises ValueError: If the rocket configuration is not supported.
+        """
         files_supported = ["IREC_version1", "test", "AURORA_v02"]
         if self.file_name in files_supported:
             return True
@@ -49,6 +76,12 @@ class File_simulation():
             raise ValueError(f"File name not supported, only files {files_supported} are allowed")
         
     def verify_motor(self):
+        """
+        Verify that the requested motor configuration is supported.
+
+        :return: True if the motor configuration is supported.
+        :raises ValueError: If the motor configuration is not supported.
+        """
         motors_supported = ["AeroTech_N2000W", "AeroTech_N2220DM", "AeroTech_N3300R", "Volta_motor_v1"]
         if self.motor_name in motors_supported:
             return True
@@ -56,6 +89,17 @@ class File_simulation():
             raise ValueError(f"Motor not supported, only motors {motors_supported} are allowed")
         
     def create_rocket(self):
+        """
+        Construct the RocketPy Rocket and SolidMotor objects.
+
+        This method loads rocket and motor parameters from JSON files,
+        adjusts incomplete motor parameters, and assembles all rocket
+        components including fins, nose cone, rail buttons, parachutes,
+        and motor.
+
+        After successful execution, the rocket is marked as ready
+        for simulation.
+        """
         if self.file_status:
             print(f"Creating rocket for {self.file_name} with motor {self.motor_name}")
         else:
@@ -160,30 +204,56 @@ class File_simulation():
         print("Rocket created and ready for simulation")
 
     def show_rocket_info(self):
+        """
+        Display summary information about the constructed rocket.
+
+        :raises ValueError: If the rocket is not ready for simulation.
+        """
         if self.rocket_ready_for_simulation:
             self.rocket.info()
         else:
             raise ValueError("Rocket not ready for simulation.")
         
     def graph_rocket(self):
+        """
+        Render a graphical representation of the rocket geometry.
+
+        :raises ValueError: If the rocket is not ready for simulation.
+        """
         if self.rocket_ready_for_simulation:            
             self.rocket.draw()            
         else:
             raise ValueError("Rocket not ready for simulation.")
         
     def show_motor_info(self):
+        """
+        Display summary information about the configured motor.
+
+        :raises ValueError: If the motor has not been defined.
+        """
         if self.motor is not None:
             self.motor.info()
         else:
             raise ValueError("Motor not defined.")
         
     def graph_motor(self):
+        """
+        Render a graphical representation of the motor.
+
+        :raises ValueError: If the motor has not been defined.
+        """
         if self.motor is not None:
             self.motor.draw()
         else:
             raise ValueError("Motor not defined.")
 
     def add_enviroment(self, enviroment):
+        """
+        Attach an atmospheric environment to the simulation.
+
+        :param enviroment: RocketPy Environment instance.
+        :raises ValueError: If the provided object is not an Environment.
+        """
         self.env = enviroment
         if not isinstance(self.env, Environment):
             raise ValueError("Enviroment must be an instance of Environment class from RocketPy")
@@ -191,6 +261,20 @@ class File_simulation():
         self.env_ready_for_simulation = True
 
     def run_single_flight_sim(self, env, rail_length, inclination, heading):
+       
+        """
+        Execute a single flight simulation.
+
+        The inclination angle is provided using a user-friendly convention
+        where 0 degrees represents a vertical launch. Internally, this is
+        converted to RocketPy's convention.
+
+        :param env: RocketPy Environment instance.
+        :param rail_length: Launch rail length in meters.
+        :param inclination: Launch inclination in degrees (0 = vertical).
+        :param heading: Launch heading angle in degrees.
+        :raises ValueError: If the rocket is not ready for simulation.
+        """
         # Note, the heading is converted from angles 0 to 90.
         # A angle of inclination of 0 means vertical launch.
 
@@ -210,6 +294,21 @@ class File_simulation():
             raise ValueError("Rocket or enviroment not ready for simulation.")
 
     def run_multiple_flight_sims(self, envs, envs_names, rail_lengths, inclinations, headings, elevations):
+        """
+        Execute multiple flight simulations using all combinations
+        of the provided parameters.
+
+        This method is intended for parametric studies and dispersion
+        analysis.
+
+        :param envs: List of RocketPy Environment instances.
+        :param envs_names: List of environment identifiers.
+        :param rail_lengths: List of rail lengths in meters.
+        :param inclinations: List of launch inclinations in degrees.
+        :param headings: List of launch headings in degrees.
+        :param elevations: List of launch elevations.
+        :return: Dictionary of simulations and a list of corresponding keys.
+        """
         simulation_files = {}
         keys = []
         for i, (env, rail_length, inclination, heading, elevation) in enumerate(
