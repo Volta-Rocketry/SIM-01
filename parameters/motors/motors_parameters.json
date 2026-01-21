@@ -1,0 +1,117 @@
+{
+    "AeroTech_N2000W": {
+        "name": "AeroTech N2000W",
+        "thrust_source": "csv_files/motors/AeroTech_N2000W.csv",
+
+        "dry_mass": 4.527,
+        "dry_inertia": -1,
+        "case_radius": 0.049,
+        "case_length": 1.046,
+
+        "grain_number": 1,
+        "grain_separation": 0.0,
+        "grain_density": 1269.4646112306802,
+
+        "grain_outer_radius": -1,
+        "grain_initial_inner_radius": -1,
+        "grain_initial_height": -1,
+
+        "grains_center_of_mass_position": -1,
+        "center_of_dry_mass_position": -1,
+
+        "nozzle_position": 0,
+        "nozzle_radius": 0.03675,
+
+        "offset": 0.0,
+    
+        "burn_time": 4.4,
+        "coordinate_system_orientation": "nozzle_to_combustion_chamber"
+    },
+
+        "AeroTech_N2220DM": {
+        "name": "AeroTech N2220DM",
+        "thrust_source": "csv_files/motors/AeroTech_N2220DM.csv",
+
+        "dry_mass": 4.814,
+        "dry_inertia": -1,
+        "case_radius": 0.049,
+        "case_length": 1.046,
+
+        "grain_number": 1,
+        "grain_separation": 0.0,
+        "grain_density": 1269.4646112306802,
+
+        "grain_outer_radius": -1,
+        "grain_initial_inner_radius": -1,
+        "grain_initial_height": -1,
+
+        "grains_center_of_mass_position": -1,
+        "center_of_dry_mass_position": -1,
+
+        "nozzle_position": 0,
+        "nozzle_radius": 0.03675,
+
+        "offset": 0.0,
+    
+        "burn_time": 4.4,
+        "coordinate_system_orientation": "nozzle_to_combustion_chamber"
+    },
+    
+    "AeroTech_N3300R": {
+        "name": "AeroTech N3300R",
+        "thrust_source": "csv_files/motors/AeroTech_N3300R.csv",
+
+        "dry_mass": 4.542,
+        "dry_inertia": -1,
+        "case_radius": 0.049,
+        "case_length": 1.046,
+
+        "grain_number": 1,
+        "grain_separation": 0.0,
+        "grain_density": 1269.4646112306802,
+
+        "grain_outer_radius": -1,
+        "grain_initial_inner_radius": -1,
+        "grain_initial_height": -1,
+
+        "grains_center_of_mass_position": -1,
+        "center_of_dry_mass_position": -1,
+
+        "nozzle_position": 0,
+        "nozzle_radius": 0.03675,
+        
+        "offset": 0.0,
+
+        "burn_time": 4.4,
+        "coordinate_system_orientation": "nozzle_to_combustion_chamber"
+    },
+
+    "Volta_motor_v1": {
+        "name": "Volta motor",
+        "thrust_source": "csv_files/motors/Volta_motor.csv",
+
+        "dry_mass": 9.442,
+        "dry_inertia": -1,
+        "case_radius": 0.0762,
+        "case_length": 1.3,
+
+        "grain_number": 5,
+        "grain_separation": 0.015,
+        "grain_density": 1749.8,
+
+        "grain_outer_radius": 0.067,
+        "grain_initial_inner_radius": 0.0225,
+        "grain_initial_height": 0.21,
+
+        "grains_center_of_mass_position": 0.67,
+        "center_of_dry_mass_position": 0.527,
+
+        "nozzle_position": 0,
+        "nozzle_radius": 0.03675,
+
+        "offset": 0.08,
+
+        "burn_time": 4.4,
+        "coordinate_system_orientation": "nozzle_to_combustion_chamber"
+    }
+}

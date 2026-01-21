@@ -1,0 +1,62 @@
+{
+    "airframe": {
+        "name": "AURORA_v02",
+        "coordinate_system_orientation": "nose_to_tail",
+        "radius": 0.0875,
+        "mass": 21.507,
+        "inertia": [0.18, 0.18, 35.84, 0.0, 0.0, 0.0],
+        "power_off_drag": "csv_files/aerodynamic/IREC_version1_power_off_drag_curve.csv",
+        "power_on_drag": "csv_files/aerodynamic/IREC_version1_power_on_drag_curve.csv",
+        "center_of_mass_without_motor": 1.73,
+        "rocket_length": 3.60
+    },
+
+    "nosecone": {
+        "name": "Nose Cone Von Karman 5:1",
+        "kind": "Von Karman",
+        "length": 0.875,
+        "base_radius": 0.0875,
+        "position": 0.0
+    },
+
+    "rail_buttons": {
+        "name": "Rail Button",
+        "angular_position": 135,
+        "distance": 1.01,        
+        "upper_position": 2.45
+    },
+
+    "fins": {    
+        "name": "Trapezoidal Fins",
+        "number": 4,
+        "section": "airfoil",
+        "position": 3.22,
+        
+        "cant_angle": 0.0,
+        "root_chord": 0.26,
+        "tip_chord": 0.17,
+        "span": 0.19,
+        "sweep_length": 0.214
+    },
+
+    "parachutes": {
+        "main": {
+            "area": 19.449,
+            "cd": 1.7,
+            "cds": 33.059748555606994,
+            "deploy_altitude": 450.0,
+            "deploy_delay": 0.0,
+            "deploy_event": "altitude",
+            "name": "Main Parachute"
+        },
+        "drogue": {
+            "area": 0.805951247935396,
+            "cd": 1.7,
+            "cds": 1.370117121490173,
+            "deploy_altitude": null,
+            "deploy_delay": 0.0,
+            "deploy_event": "apogee",
+            "name": "Drogue Parachute"
+        }
+    }
+}
