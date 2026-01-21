@@ -7,7 +7,7 @@ from scipy.signal import butter, filtfilt
 from scipy.interpolate import interp1d
 from rocketpy import Environment, Flight, Rocket, SolidMotor
 from src.adjust_parameters import eval_adjust_motor_parameters
-
+    
 class File_simulation():
     """
     Core orchestration class for rocket flight simulations.
@@ -334,6 +334,44 @@ class File_simulation():
 
 # ----- Extract data from simulations -----
 def extract_initial_conditions_sim_data(sim):
+    """
+    Extract simulation data corresponding to the initial flight conditions.
+
+    This function represents the physical state of the rocket at simulation
+    start (t = 0), before any significant displacement, aerodynamic effects,
+    or thrust-induced acceleration have occurred.
+
+    Parameters
+    ----------
+    sim : Flight
+        Completed RocketPy Flight simulation object containing time-zero state
+        information.
+
+    Returns
+    -------
+    dict
+        Dictionary containing the initial flight state, including:
+        - time
+        - position (x, y, z)
+        - velocity (vx, vy, vz)
+        - attitude quaternions
+        - Euler orientation angles
+        - angular velocity components
+        - static stability margin
+        - launch rail configuration
+        - wind components at launch
+
+    Assumptions
+    -----------
+    - The simulation starts at t = 0.
+    - Time-zero state data is available and valid.
+    - No interpolation is performed.
+
+    Edge Cases
+    ----------
+    - If the simulation time array is empty or corrupted, extraction will fail.
+    - If any required Flight attribute is missing, a runtime error may occur.
+    """
     print("Entro acá")
     print(sim)
     t0 = sim.time[0]
@@ -386,6 +424,40 @@ def extract_initial_conditions_sim_data(sim):
     return initial_conditions_data
 
 def extract_out_of_rail_sim_data(sim):
+    """
+    Extract simulation data at the moment the rocket exits the launch rail.
+
+    This function represents the physical event where the rocket transitions
+    from rail-constrained motion to free flight, at which point aerodynamic
+    forces and attitude dynamics fully apply.
+
+    Parameters
+    ----------
+    sim : Flight
+        Completed RocketPy Flight simulation object that includes a launch
+        rail phase.
+
+    Returns
+    -------
+    dict
+        Dictionary containing key flight quantities at rail exit, including:
+        - time of rail exit
+        - velocity magnitude
+        - static stability margin
+        - angle of attack
+        - thrust-to-weight ratio
+        - Reynolds number
+
+    Assumptions
+    -----------
+    - The rocket exits the launch rail exactly once.
+    - RocketPy correctly detects the rail exit event.
+
+    Edge Cases
+    ----------
+    - If the rocket never exits the rail, the underlying Flight attributes
+      may be undefined and extraction will fail.
+    """
     t_out_rail = sim.out_of_rail_time
     out_rail_vel = sim.out_of_rail_velocity
     out_rail_stability = sim.out_of_rail_stability_margin
@@ -405,6 +477,34 @@ def extract_out_of_rail_sim_data(sim):
     return out_of_rail_data 
 
 def extract_burn_out_sim_data(sim):
+    """
+    Extract simulation data at motor burnout.
+
+    Motor burnout is defined as the instant when the motor thrust becomes zero,
+    marking the transition from powered ascent to ballistic flight.
+
+    Parameters
+    ----------
+    sim : Flight
+        Completed RocketPy Flight simulation object containing a motor with a
+        defined burnout time.
+
+    Returns
+    -------
+    None
+        This function currently performs data access operations but does not
+        return a structured output.
+
+    Assumptions
+    -----------
+    - The motor has a single continuous burn.
+    - The motor burnout time is defined and accessible.
+
+    Edge Cases
+    ----------
+    - If the motor does not define a burnout time, extraction will fail.
+    - If the simulation does not reach burnout, results are undefined.
+    """
     t_burn_out = sim.rocket.motor.burn_out_time
     
     burn_out_z = sim.z(t_burn_out) # ASL m
