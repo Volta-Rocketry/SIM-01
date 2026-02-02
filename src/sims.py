@@ -367,10 +367,6 @@ def extract_initial_conditions_sim_data(sim):
     - Time-zero state data is available and valid.
     - No interpolation is performed.
 
-    Edge Cases
-    ----------
-    - If the simulation time array is empty or corrupted, extraction will fail.
-    - If any required Flight attribute is missing, a runtime error may occur.
     """
     print("Entro acá")
     print(sim)
@@ -448,15 +444,6 @@ def extract_out_of_rail_sim_data(sim):
         - thrust-to-weight ratio
         - Reynolds number
 
-    Assumptions
-    -----------
-    - The rocket exits the launch rail exactly once.
-    - RocketPy correctly detects the rail exit event.
-
-    Edge Cases
-    ----------
-    - If the rocket never exits the rail, the underlying Flight attributes
-      may be undefined and extraction will fail.
     """
     t_out_rail = sim.out_of_rail_time
     out_rail_vel = sim.out_of_rail_velocity
@@ -491,19 +478,16 @@ def extract_burn_out_sim_data(sim):
 
     Returns
     -------
-    None
-        This function currently performs data access operations but does not
-        return a structured output.
+    dict
+        Dictionary containing key flight quantities at motor burnout, including:
+        - time of motor burnout
+        - altitude above sea level (ASL)
+        - altitude above ground level (AGL)
+        - velocity magnitude relative to ground
+        - Mach number
+        - freestream velocity magnitude
+        - dynamic pressure
 
-    Assumptions
-    -----------
-    - The motor has a single continuous burn.
-    - The motor burnout time is defined and accessible.
-
-    Edge Cases
-    ----------
-    - If the motor does not define a burnout time, extraction will fail.
-    - If the simulation does not reach burnout, results are undefined.
     """
     t_burn_out = sim.rocket.motor.burn_out_time
     

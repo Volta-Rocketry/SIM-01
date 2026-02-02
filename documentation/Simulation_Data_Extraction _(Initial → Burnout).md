@@ -77,11 +77,6 @@ A dictionary containing:
 - Acceleration components
 - Orientation or attitude-related values (if available)
 
-### Assumptions and edge cases
-
-- Assumes the rocket exits the rail exactly once
-- If rail exit never occurs, extraction must fail
-- Uses RocketPy’s internal rail-exit detection
 
 ### Usage example 
  
@@ -106,11 +101,22 @@ flight.
 
 A dictionary containing: 
 
-- Time of burnout
-- Position components
-- Velocity components
-- Acceleration components
-- Vehicle mass at burnout
+Dictionary containing the rocket state at motor burnout with the following
+    keys:
+ - time : float
+        Time in seconds at which motor burnout occurs.
+ - z : float
+        Altitude above sea level (ASL) at motor burnout, in meters.
+- altitude : float
+        Altitude above ground level (AGL) at motor burnout, in meters.
+- speed : float
+        Rocket velocity magnitude relative to ground at motor burnout, in m/s.
+- mach : float
+        Mach number of the rocket at motor burnout.
+- freestream_speed : float
+        Freestream airspeed relative to the rocket at motor burnout, in m/s.
+- dynamic_pressure : float
+        Dynamic pressure experienced by the rocket at motor burnout, in pascals.
 
 ### Assumptions and edge cases
 
