@@ -514,7 +514,42 @@ def extract_burn_out_sim_data(sim):
     return burn_out_data
 
 def extract_apogee_sim_data(sim):
+    """
+    Extract simulation data at apogee.
 
+    Apogee is defined as the instant when the rocket reaches its maximum
+    altitude during flight. This function retrieves the rocket state at
+    that event, expressed in both Above Sea Level (ASL) and Above Ground
+    Level (AGL) reference frames.
+
+    Parameters
+    ----------
+    sim : Flight
+        Completed RocketPy Flight simulation object.
+
+    Returns
+    -------
+    dict
+        Dictionary containing apogee-related metrics:
+        - time : float
+            Time at which maximum altitude is reached [s].
+        - x, y : float
+            Horizontal position coordinates at apogee [m].
+        - latitude, longitude : float
+            Geographic coordinates at apogee [deg].
+        - z : float
+            Altitude above sea level (ASL) at apogee [m].
+        - altitude : float
+            Altitude above ground level (AGL) at apogee [m].
+        - freestream_speed : float
+            Freestream velocity magnitude at apogee [m/s].
+
+    Notes
+    -----
+    The apogee event is internally detected by RocketPy as the point of
+    maximum altitude and may not correspond exactly to zero vertical velocity
+    due to numerical interpolation.
+    """
     t_apogee = sim.apogee_time
 
     apogee_x = sim.x(t_apogee) # m
@@ -541,6 +576,41 @@ def extract_apogee_sim_data(sim):
     return apogee_data
 
 def extract_impact_sim_data(sim):
+    """
+    Extract simulation data at ground impact.
+
+    This function represents the final flight event when the rocket reaches
+    ground level after descent. It retrieves the rocket state at the end of
+    the simulation.
+
+    Parameters
+    ----------
+    sim : Flight
+        Completed RocketPy Flight simulation object.
+        The simulation must run until ground impact.
+
+    Returns
+    -------
+    dict
+        Dictionary containing impact-related metrics:
+        - time : float
+            Time of ground impact [s].
+        - x, y : float
+            Horizontal position coordinates at impact [m].
+        - latitude, longitude : float
+            Geographic coordinates at impact [deg].
+        - z : float
+            Altitude above sea level (ASL) at impact [m].
+        - altitude : float
+            Altitude above ground level (AGL) at impact [m].
+        - speed : float
+            Rocket velocity magnitude at impact [m/s].
+
+    Notes
+    -----
+    If the simulation terminates before ground impact (e.g., ends at apogee),
+    the extracted data is not physically meaningful.
+    """
     # NOTE: IMPORTANT, MUST BE CONSIDERED THAT IF THE SIM ENDS AT APOGEE, THIS IS NOT VALID
     t_impact = sim.t_final
 
@@ -568,6 +638,43 @@ def extract_impact_sim_data(sim):
     return impact_data
 
 def extract_maximum_values_sim_data(sim):
+        """
+    Extract maximum flight metrics recorded during the simulation.
+
+    This function provides a summary of peak values experienced by the rocket
+    over the course of the simulated flight, including aerodynamic, kinematic,
+    and structural-related quantities.
+
+    Parameters
+    ----------
+    sim : Flight
+        Completed RocketPy Flight simulation object.
+
+    Returns
+    -------
+    dict
+        Dictionary containing maximum values and their corresponding times:
+        - max_speed, max_speed_time
+        - max_mach, max_mach_time
+        - max_reynolds, max_reynolds_time
+        - max_dynamic_pressure, max_dynamic_pressure_time
+        - max_acceleration_power_on, max_acceleration_power_on_time
+        - max_Gs_power_on, max_Gs_power_on_time
+        - max_acceleration_power_off, max_acceleration_power_off_time
+        - max_Gs_power_off, max_Gs_power_off_time
+        - max_stability_margin, max_stability_margin_time
+        - maximum rail button normal and shear forces
+
+    Notes
+    -----
+    Maximum values are computed internally by RocketPy over the entire
+    simulation time history. Power-on and power-off accelerations are
+    evaluated over the motor burn and post-burn intervals respectively.
+
+    Acceleration expressed in Gs is computed by normalizing acceleration
+    values using the standard gravitational acceleration defined by
+    the simulation environment.
+    """
         max_speed = sim.max_speed # m/s
         max_speed_time = sim.max_speed_time # s
 
