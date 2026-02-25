@@ -856,6 +856,67 @@ def compare_usual_important_data(sims, names):
 
 # --- Funciones para generar modelos atmosfericos de viento y velocidad de python
 def generate_cte_wind_cte_angle(lat, lon, elev, angle, speed):
+    """
+    Generate a RocketPy Environment assuming constant wind speed
+    and constant wind direction at all altitudes.
+
+    Model Assumptions
+    -----------------
+    - Wind speed is constant with altitude.
+    - Wind direction is constant with altitude.
+    - No turbulence.
+    - No vertical shear.
+
+    Wind direction follows the meteorological convention:
+        0° = North
+        90° = East
+        180° = South
+        270° = West
+
+    The wind is converted into horizontal components (u, v) and applied
+    uniformly from ground level up to 10,000 m.
+
+    Parameters
+    ----------
+    lat : float
+        Launch site latitude [degrees].
+
+    lon : float
+        Launch site longitude [degrees].
+
+    elev : float
+        Launch site elevation above sea level [m].
+
+    angle : float
+        Wind direction (meteorological convention) [degrees].
+
+    speed : float
+        Wind speed magnitude [m/s].
+
+    Altitude Dependence
+    -------------------
+    Wind components are defined at:
+        - 0 m
+        - 10,000 m
+    with identical values, resulting in a vertically constant profile.
+
+    Limitations
+    -----------
+    - Does not model vertical shear.
+    - Does not include turbulence.
+    - Not suitable for realistic atmospheric modeling.
+
+    Valid Use Cases
+    ---------------
+    - Baseline deterministic simulations.
+    - Controlled comparison studies.
+    - Sensitivity analysis with fixed wind conditions.
+
+    Returns
+    -------
+    Environment
+        RocketPy Environment object configured with a constant wind profile.
+    """
     # Generates an enviroment using the same wind and angle at all altitudes
     # Angles are: 0° = Norte, 90° = Este, 180° = Sur, 270° = Oeste
     wind_u = -speed*math.sin(math.radians(angle))
@@ -876,6 +937,66 @@ def generate_cte_wind_cte_angle(lat, lon, elev, angle, speed):
     return env
 
 def generate_cte_wind_cte_angle_per_height(lat, lon, elev, heights, angles, speeds):
+    """
+    Generate a RocketPy Environment using wind speed and direction
+    defined at discrete altitude levels.
+
+    Model Assumptions
+    -----------------
+    - Wind speed is constant at each specified altitude.
+    - Wind direction is constant at each specified altitude.
+
+    Wind direction follows the meteorological convention:
+        0° = North
+        90° = East
+        180° = South
+        270° = West
+
+    Parameters
+    ----------
+    lat : float
+        Launch site latitude [degrees].
+
+    lon : float
+        Launch site longitude [degrees].
+
+    elev : float
+        Launch site elevation above sea level [m].
+
+    heights : list of float
+        Altitudes where wind is defined [m].
+
+    angles : list of float
+        Wind direction at each altitude [degrees].
+
+    speeds : list of float
+        Wind speed magnitude at each altitude [m/s].
+
+    Altitude Dependence
+    -------------------
+    Wind components are computed at each provided altitude and passed
+    as a custom atmospheric profile. Altitude variation follows:
+        - Discrete specification
+        - Linear interpolation handled internally by RocketPy
+
+    Limitations
+    -----------
+    - Accuracy depends on the number of altitude points provided.
+    - Assumes piecewise-constant behavior between input levels.
+    - No stochastic turbulence model.
+
+    Valid Use Cases
+    ---------------
+    - Simplified wind shear representation.
+    - Layered atmosphere approximations.
+    - Parametric studies with altitude-dependent winds.
+
+    Returns
+    -------
+    Environment
+        RocketPy Environment object configured with an altitude-dependent
+        wind profile.
+    """
     # Generates an enviroment using the same wind and angle at all altitudes
     # Angles are: 0° = Norte, 90° = Este, 180° = Sur, 270° = Oeste
 
@@ -906,6 +1027,73 @@ def generate_cte_wind_cte_angle_per_height(lat, lon, elev, heights, angles, spee
     return env
 
 def generate_nsy_wind_cte_angle(lat, lon, elev, angle, speed, turbulence, deviation):
+    """
+    Generate a RocketPy Environment with constant mean wind direction
+    and speed, including stochastic vertical variations in wind magnitude.
+
+    Model Assumptions
+    -----------------
+    - Constant mean wind direction.
+    - Constant mean wind speed.
+    - Vertical fluctuations added to wind magnitude.
+
+    Fluctuations are generated using:
+        1. Gaussian white noise
+        2. Low-pass filtering
+        3. Scaling by turbulence and deviation parameters
+
+    The result is a smooth altitude-dependent perturbation applied to
+    the wind magnitude. Wind direction remains constant with altitude.
+
+    Parameters
+    ----------
+    lat : float
+        Launch site latitude [degrees].
+
+    lon : float
+        Launch site longitude [degrees].
+
+    elev : float
+        Launch site elevation above sea level [m].
+
+    angle : float
+        Wind direction (meteorological convention) [degrees].
+
+    speed : float
+        Wind speed magnitude [m/s].
+
+    turbulence : float
+        Fluctuation intensity scaling factor [dimensionless].
+
+    deviation : float
+        Amplitude scaling applied to fluctuations [m/s].
+
+    Altitude Dependence
+    -------------------
+    Wind is defined from:
+        - 0 m to 80,000 m
+        - With 10 m resolution
+
+    Wind magnitude varies smoothly with altitude due to filtered
+    stochastic noise. Wind direction does not vary with altitude.
+
+    Limitations
+    -----------
+    - Turbulence model is synthetic and not physically derived.
+    - Direction does not vary with altitude.
+    - Results are non-deterministic unless a random seed is fixed.
+
+    Valid Use Cases
+    ---------------
+    - Robustness testing under wind uncertainty.
+    - Sensitivity analysis with turbulent-like conditions.
+
+    Returns
+    -------
+    Environment
+        RocketPy Environment object configured with a stochastic
+        altitude-dependent wind magnitude profile.
+    """
     cutoff = 0.05
     heights = np.arange(0, 80000, 10)
     
