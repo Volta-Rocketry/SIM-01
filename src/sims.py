@@ -943,6 +943,38 @@ def generate_nsy_wind_cte_angle(lat, lon, elev, angle, speed, turbulence, deviat
     return env
 
 def generate_cte_wind_nsy_angle(lat, lon, elev, angle, speed, turbulence, deviation):
+    """
+    Generate an atmospheric environment with constant wind speed and
+    stochastically varying wind direction across altitude.
+
+    Wind direction is perturbed at each altitude sample using low-frequency
+    filtered Gaussian noise, producing smooth and spatially correlated
+    directional variability. Wind speed remains fixed at all altitudes.
+    This model isolates the effect of directional uncertainty while keeping
+    aerodynamic loading magnitude constant throughout the flight.
+
+    The wind components follow the meteorological convention:
+        u(z) = -speed * sin(radians(theta(z)))
+        v(z) = -speed * cos(radians(theta(z)))
+
+    where theta(z) = angle + deviation * turbulence * n_filtered(z),
+    and n_filtered is a normalized 2nd-order Butterworth low-pass filtered
+    Gaussian signal (cutoff frequency f_c = 0.05).
+
+    :param lat: Launch site latitude in decimal degrees.
+    :param lon: Launch site longitude in decimal degrees.
+    :param elev: Launch site elevation above sea level in meters.
+    :param angle: Base wind direction in degrees. Meteorological convention:
+                  0 = North, 90 = East, 180 = South, 270 = West.
+    :param speed: Wind speed magnitude in m/s, constant at all altitudes.
+    :param turbulence: Dimensionless relative turbulence intensity coefficient.
+                       Scales the amplitude of the filtered directional noise.
+    :param deviation: Absolute deviation scale in degrees. Controls the
+                      angular spread of the perturbation around the base angle.
+    :return: RocketPy Environment instance configured with the generated
+             custom atmospheric wind profile.
+    """    
+    
     cutoff = 0.05
     heights = np.arange(0, 80000, 10)
     
@@ -983,6 +1015,51 @@ def generate_cte_wind_nsy_angle(lat, lon, elev, angle, speed, turbulence, deviat
     return env
 
 def generate_nsy_wind_nsy_angle(lat, lon, elev, angle, speed, speed_turbulence, speed_deviation, angle_turbulence, angle_deviation):
+    """
+    Generate an atmospheric environment where both wind speed and wind
+    direction vary independently with altitude using stochastic low-frequency
+    noise.
+
+    Two independent Gaussian noise signals are generated and filtered
+    separately — one for speed and one for direction — producing spatially
+    correlated but statistically independent perturbations. Speed variability
+    directly affects the dynamic pressure of the crosswind component, scaling
+    aerodynamic lateral forces non-linearly. This is the most general
+    single-layer non-symmetric model and is the appropriate choice for
+    full turbulence dispersion and structural load uncertainty studies.
+
+    The wind components follow the meteorological convention:
+        u(z) = -v(z) * sin(radians(theta(z)))
+        w(z) = -v(z) * cos(radians(theta(z)))
+
+    where:
+        v(z)     = speed + speed_deviation * speed_turbulence * n_speed(z)
+        theta(z) = angle + angle_deviation * angle_turbulence * n_angle(z)
+
+    and n_speed, n_angle are independent normalized 2nd-order Butterworth
+    low-pass filtered Gaussian signals (cutoff frequency f_c = 0.05).
+
+    Setting speed_turbulence = 0 and speed_deviation = 0 reduces this
+    function to the behavior of generate_cte_wind_nsy_angle.
+
+    :param lat: Launch site latitude in decimal degrees.
+    :param lon: Launch site longitude in decimal degrees.
+    :param elev: Launch site elevation above sea level in meters.
+    :param angle: Base wind direction in degrees. Meteorological convention:
+                  0 = North, 90 = East, 180 = South, 270 = West.
+    :param speed: Base wind speed magnitude in m/s.
+    :param speed_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for speed variability.
+    :param speed_deviation: Absolute deviation scale in m/s. Controls the
+                            speed spread around the base wind speed.
+    :param angle_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for directional variability.
+    :param angle_deviation: Absolute deviation scale in degrees. Controls
+                            the angular spread around the base wind direction.
+    :return: RocketPy Environment instance configured with the generated
+             custom atmospheric wind profile.
+    """
+    
     cutoff = 0.05
     heights = np.arange(0, 80000, 10)
     
@@ -1040,6 +1117,57 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     dz: resolución vertical [m]
     """
 
+"""
+    Generate a layered atmospheric wind profile where each altitude band
+    has its own base speed and direction, with optional stochastic
+    perturbations applied independently per layer.
+
+    The altitude domain is divided into layers defined by heights_ref
+    breakpoints. Within each layer, the base speed and direction are held
+    constant and perturbed by independent low-frequency filtered Gaussian
+    noise. Transitions between layers are discrete steps — no interpolation
+    is applied at layer boundaries. The final layer extends from
+    heights_ref[-1] to max_altitude.
+
+    This is the most physically complete wind model in the module. It
+    captures both atmospheric wind shear (layer-to-layer changes in speed
+    and direction) and intra-layer turbulence.
+
+    The wind components follow the meteorological convention:
+        u(z) = -v(z) * sin(radians(theta(z)))
+        v(z) = -v(z) * cos(radians(theta(z)))
+
+    where v(z) and theta(z) are the perturbed speed and direction profiles
+    computed per layer using normalized 2nd-order Butterworth low-pass
+    filtered Gaussian noise (cutoff frequency f_c = 0.05).
+
+    :param lat: Launch site latitude in decimal degrees.
+    :param lon: Launch site longitude in decimal degrees.
+    :param elev: Launch site elevation above sea level in meters.
+    :param heights_ref: List of altitude breakpoints in meters defining
+                        layer boundaries. Must be in ascending order.
+    :param angles_ref: List of base wind directions in degrees for each
+                       layer. Meteorological convention: 0 = North, 90 = East,
+                       180 = South, 270 = West. Must have the same length
+                       as heights_ref.
+    :param speeds_ref: List of base wind speeds in m/s for each layer.
+                       Must have the same length as heights_ref.
+    :param speed_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for speed. Default: 0.1.
+    :param speed_deviation: Absolute deviation scale in m/s for speed noise.
+                            Default: 2.
+    :param angle_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for direction. Default: 0.0.
+    :param angle_deviation: Absolute deviation scale in degrees for
+                            directional noise. Default: 0.
+    :param max_altitude: Maximum altitude of the generated profile in meters.
+                         Default: 80000.
+    :param dz: Altitude grid resolution in meters. Default: 10.
+    :return: RocketPy Environment instance configured with the generated
+             layered custom atmospheric wind profile.
+    :raises ValueError: If heights_ref, angles_ref, and speeds_ref do not
+                        have the same length.
+    """
     # Validación
     if len(heights_ref) != len(angles_ref) or len(heights_ref) != len(speeds_ref):
         raise ValueError("Heights, angles and speeds must have the same length")
