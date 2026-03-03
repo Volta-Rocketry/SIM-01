@@ -1114,6 +1114,20 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
 
 # ------ Funciones para gráficar
 def extract_map_data(sim):
+    """
+    Extract the geographic trajectory of the rocket as parallel latitude
+    and longitude arrays sampled across the full flight duration.
+
+    This helper retrieves pre-computed geographic position arrays from a
+    completed RocketPy Flight object. The output is intended for ground
+    track plotting and horizontal displacement analysis. No simulation
+    logic is re-executed.
+
+    :param sim: Completed RocketPy Flight simulation object.
+    :return: Tuple (latitudes, longitudes) where both are array-like of
+            shape (N,) in decimal degrees, sharing the same index
+            correspondence across all N recorded time steps.
+    """
     latitudes = sim.latitude_array
     longitudes = sim.longitude_array
 
@@ -1121,6 +1135,32 @@ def extract_map_data(sim):
 
 
 def extract_rb_ind(sim):
+    """
+    Extract the time history of normal and shear forces on both rail
+    buttons during the launch rail phase.
+
+    Rail buttons are the mechanical interface between the rocket and the
+    launch rail. This helper retrieves the raw force time-series from the
+    internal source arrays of RocketPy's Function objects for both the
+    upper (rb1) and lower (rb2) rail buttons. The output is intended for
+    structural load analysis, margin-of-safety evaluation, and force
+    profile plotting.
+
+    Force data is physically meaningful only during the rail phase, from
+    launch until rail exit. Values recorded after sim.out_of_rail_time
+    should be disregarded for structural analysis purposes.
+
+    rb1 refers to the upper rail button and rb2 to the lower rail button,
+    consistent with the position convention defined in
+    File_simulation.create_rocket().
+
+    :param sim: Completed RocketPy Flight simulation object containing
+                rail button force data recorded during the rail phase.
+    :return: Tuple (t, rb1_normal_force, rb1_shear_force,
+            rb2_normal_force, rb2_shear_force) where all five are
+            numpy.ndarray of shape (N,). Time t is in seconds.
+            Force arrays are in Newtons and share the same time index.
+    """
     rb1_normal_force = sim.rail_button1_normal_force.source[:,1]
     rb1_shear_force = sim.rail_button1_shear_force.source[:,1]
     rb2_normal_force = sim.rail_button2_normal_force.source[:,1]
