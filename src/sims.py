@@ -737,6 +737,35 @@ def extract_maximum_values_sim_data(sim):
         return max_values_data
 
 def extract_usual_important_sim_data(sim):
+    """
+    Extract a high-level summary of usual and important flight metrics from a
+    completed RocketPy Flight simulation.
+
+    This function aggregates representative quantities from the main phases
+    of the flight, including initial conditions, rail exit, motor burnout,
+    apogee, global maximum values, and ground impact. The extracted metrics
+    are intended to provide a physically interpretable overview of the flight
+    suitable for engineering comparison and summary analysis.
+
+    Parameters
+    ----------
+    sim : Flight
+        Completed RocketPy Flight simulation object.
+
+    Returns
+    -------
+    dict
+        Dictionary containing key flight quantities, including:
+        - Initial static stability margin
+        - Frontal and lateral surface wind velocities
+        - Rail exit velocity, stability margin, angle of attack, and
+          thrust-to-weight ratio
+        - Motor burnout time, dynamic pressure, and acceleration
+        - Apogee altitude and time
+        - Global maximum values (speed, Mach number, dynamic pressure,
+          accelerations, stability margin)
+        - Impact time, speed, position, and impact radius from launch point
+    """
     initial_static_margin = sim.initial_stability_margin # Calibers
     
     frontal_surface_wind = sim.frontal_surface_wind # m/s
@@ -830,6 +859,29 @@ def extract_usual_important_sim_data(sim):
     return usual_important_data
 
 def compare_usual_important_data(sims, names):
+    """
+    Compare summarized flight metrics across multiple RocketPy simulations.
+
+    This function applies the same extraction logic to each provided Flight
+    simulation using extract_usual_important_sim_data and aggregates the
+    results into a structured tabular format. The output is intended for
+    trade studies, batch analysis, and design iteration comparison.
+
+    Parameters
+    ----------
+    sims : dict
+        Dictionary mapping simulation identifiers to RocketPy Flight objects.
+
+    names : list
+        List of labels corresponding to each simulation, used to name the
+        comparison columns.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame where each row corresponds to a flight metric and each
+        column corresponds to a simulation case.
+    """
     
 
     data = {}
