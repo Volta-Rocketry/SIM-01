@@ -1,0 +1,3 @@
+# Parameters_IREC_version03.json 
+
+This document contains all the information about the latest version of OpenRocket released to date (03/03/2026), and its purpose is to allow users to perform various tests using the rocketpy code to make timely decisions within the project in general. It also seeks to win the Barrowman prize by attempting to predict the maximum height the rocket will reach through a series of simulations. Details to keep in mind: the distances and measurements shown here are in International System (SI) units, and the orientation of these measurements is “nose to tail.” In other words, all measurements start from a reference point (0,0) located at the rocket's nose cone. 

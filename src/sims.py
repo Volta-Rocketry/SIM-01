@@ -19,7 +19,7 @@ class File_simulation():
     It acts as a high-level interface over RocketPy, allowing contributors
     to run simulations without interacting directly with low-level APIs.
     """
-    def __init__(self, file_name, motor_name):
+    def __init__(self, file_name, motor_name, cg_true, cp_true, mass_true):
         """
         Initialize the simulation object and construct the rocket.
 
@@ -34,6 +34,9 @@ class File_simulation():
         self.file_name = file_name
         self.motor_name = motor_name
         self.file_status = False
+        self.cg_true = cg_true
+        self.cp_true = cp_true
+        self.mass_true = mass_true
 
         self.rocket_ready_for_simulation = False
         self.env_ready_for_simulation = False
@@ -61,6 +64,7 @@ class File_simulation():
             raise ValueError("File or motor not verified")
                 
         self.create_rocket()
+        self.verify_rocket()
 
     def verify_file(self):
         """
@@ -69,7 +73,7 @@ class File_simulation():
         :return: True if the rocket configuration is supported.
         :raises ValueError: If the rocket configuration is not supported.
         """
-        files_supported = ["IREC_version1", "test", "AURORA_v02"]
+        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03"]
         if self.file_name in files_supported:
             return True
         else:
@@ -202,6 +206,47 @@ class File_simulation():
 
         self.rocket_ready_for_simulation = True
         print("Rocket created and ready for simulation")
+
+    def verify_rocket(self):
+        """
+    Verifies whether the RocketPy rocket matches the OpenRocket model
+    within predefined tolerances.
+
+    Parameters
+    ----------
+    cg_from_OR : float
+        Center of gravity from OpenRocket (meters, without motor).
+    mass_without_motor_OR : float
+        Structural mass from OpenRocket (kg).
+    cp_from_OR : float
+        rockets center of pressure position relative to user defined rocket 
+        reference system.
+
+    Raises
+    ------
+    ValueError
+        If the rocket parameters differ beyond allowed margins.
+    """
+
+        cg_from_OR = self.cg_true
+        mass_without_motor_OR = self.mass_true
+        cp_from_OR = self.cp_true
+        Margin_OF_Error_CG_CP = 0.02
+        Margin_OF_ERROR_MASS = 0.2
+        cp_from_RPY = self.rocket.cp_position(0)
+        cg_from_RPY = self.rocket.center_of_mass(0)
+        mass_without_motor_RPY = self.rocket.mass
+        
+        print("RocketPy CG without motor:", self.rocket.center_of_mass_without_motor)
+        print("OpenRocket CG without motor:", cg_from_OR)
+        print("Difference:", abs(cg_from_OR - cg_from_RPY))
+        print("CG OR:", cg_from_OR, "CG RPY:", cg_from_RPY)
+        print("CP OR:", cp_from_OR, "CP RPY:", cp_from_RPY)
+        print("Mass OR:", mass_without_motor_OR, "Mass RPY:", mass_without_motor_RPY)
+
+        if abs(cg_from_OR - cg_from_RPY) <= Margin_OF_Error_CG_CP and abs(cp_from_OR - cp_from_RPY) <= Margin_OF_Error_CG_CP and abs(mass_without_motor_OR - mass_without_motor_RPY) <= Margin_OF_ERROR_MASS: 
+            print ("Your rocket have been verified")
+        else : raise ValueError("Your rocket doesn't match the one in rocketpy")
 
     def show_rocket_info(self):
         """
