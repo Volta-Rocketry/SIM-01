@@ -237,13 +237,6 @@ class File_simulation():
         cg_from_RPY = self.rocket.center_of_mass(0)
         mass_without_motor_RPY = self.rocket.mass
         
-        print("RocketPy CG without motor:", self.rocket.center_of_mass_without_motor)
-        print("OpenRocket CG without motor:", cg_from_OR)
-        print("Difference:", abs(cg_from_OR - cg_from_RPY))
-        print("CG OR:", cg_from_OR, "CG RPY:", cg_from_RPY)
-        print("CP OR:", cp_from_OR, "CP RPY:", cp_from_RPY)
-        print("Mass OR:", mass_without_motor_OR, "Mass RPY:", mass_without_motor_RPY)
-
         if abs(cg_from_OR - cg_from_RPY) <= Margin_OF_Error_CG_CP and abs(cp_from_OR - cp_from_RPY) <= Margin_OF_Error_CG_CP and abs(mass_without_motor_OR - mass_without_motor_RPY) <= Margin_OF_ERROR_MASS: 
             print ("Your rocket have been verified")
         else : raise ValueError("Your rocket doesn't match the one in rocketpy")
