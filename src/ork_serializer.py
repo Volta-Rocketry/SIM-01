@@ -599,9 +599,12 @@ def run_serialization(ork_path, jar_path, output_path="parameters/rocket/", verb
     verbose_flag = "True" if verbose else "False"
 
     # -------------------------------------------------------------------------
-    # Step 3.1: Generate the parameter JSON with ork2json
+    # Step 3.1: Run ork2json — generates both the parameter JSON and drag CSV
     # -------------------------------------------------------------------------
-    print(f"\n  Step 3.1: Generating parameter JSON file...")
+    # ork2json generates two output files in a single run:
+    #   - parameters.json  -> rocket parameters
+    #   - drag_curve.csv   -> drag curve data
+    print(f"\n  Running ork2json (generates JSON and CSV in one step)...")
     print(f"    .ork file    : {ork_abs}")
     print(f"    Output folder: {output_abs}")
     print(f"    (This may take between 10 and 60 seconds, please wait...)")
@@ -631,6 +634,12 @@ def run_serialization(ork_path, jar_path, output_path="parameters/rocket/", verb
             print("  - The .ork file has components not supported by rocketserializer.")
             print("  - The JAR version does not match the .ork version.")
             print("  - The .ork file is corrupted or incomplete.")
+            print("  - The .ork file is not saved in English.")
+            print("    -> In OpenRocket: File -> Preferences -> Language -> English")
+            print("       Then save the .ork and run this script again.")
+            print("  - The rocket has more than one stage or more than one motor.")
+            print("    -> rocketserializer only supports single-stage rockets")
+            print("       with a single motor.")
             print()
             print("  Check the rocketserializer documentation at:")
             print("  https://github.com/RocketPy-Team/RocketSerializer")
@@ -639,7 +648,7 @@ def run_serialization(ork_path, jar_path, output_path="parameters/rocket/", verb
         if verbose:
             print(json_result.stdout)
 
-        print(f"  [OK] JSON generated successfully.")
+        print(f"  [OK] JSON and CSV generated successfully.")
 
     except FileNotFoundError:
         print("\n[ERROR] The 'ork2json' command was not found.")
@@ -648,56 +657,6 @@ def run_serialization(ork_path, jar_path, output_path="parameters/rocket/", verb
         print("  or the installation did not complete properly.")
         print()
         print("  Try reinstalling it:")
-        print("      pip install --force-reinstall rocketserializer")
-        sys.exit(1)
-
-    # -------------------------------------------------------------------------
-    # Step 3.2: Generate the drag CSV with ork2csv
-    # -------------------------------------------------------------------------
-    print(f"\n  Step 3.2: Generating drag CSV file...")
-    print(f"    (This may take between 10 and 60 seconds, please wait...)")
-
-    csv_command = [
-        "ork2csv",
-        "--filepath", ork_abs,
-        "--output",   output_abs,
-        "--ork_jar",  jar_abs,
-        "--verbose",  verbose_flag
-    ]
-
-    try:
-        csv_result = subprocess.run(
-            csv_command,
-            capture_output=True,
-            text=True
-        )
-
-        if csv_result.returncode != 0:
-            print("\n[ERROR] ork2csv failed during execution.")
-            print()
-            print("  Error message:")
-            print(f"  {csv_result.stderr}")
-            print()
-            print("  Most common causes:")
-            print("  1. The .ork file has NO saved simulations.")
-            print("     -> Open the file in OpenRocket, run at least one")
-            print("        simulation, and save the file.")
-            print("  2. The .ork file is in a language other than English.")
-            print("     -> In OpenRocket: File -> Preferences -> Language -> English")
-            print("        Then save the .ork and run this script again.")
-            print("  3. The rocket has more than one stage or more than one motor.")
-            print("     -> rocketserializer only supports single-stage rockets")
-            print("        with a single motor.")
-            sys.exit(1)
-
-        if verbose:
-            print(csv_result.stdout)
-
-        print(f"  [OK] Drag CSV generated successfully.")
-
-    except FileNotFoundError:
-        print("\n[ERROR] The 'ork2csv' command was not found.")
-        print("  Try reinstalling rocketserializer:")
         print("      pip install --force-reinstall rocketserializer")
         sys.exit(1)
 
