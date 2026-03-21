@@ -115,8 +115,8 @@ import sys             # For stopping the program with sys.exit() when critical 
 import glob            # For searching files using patterns (e.g., find all *.ork files)
 import subprocess      # For running terminal commands from Python (ork2json, ork2csv)
 import importlib.util  # For checking if a Python library is installed without importing it
-
-
+from pathlib import Path  # For working with file paths in an object-oriented way
+import json               # For reading and writing JSON files
 # =============================================================================
 # BLOCK 1: Verify that rocketserializer is installed
 # =============================================================================
@@ -426,27 +426,6 @@ def verify_ork_file(ork_path=None, search_folder="."):
 # BLOCK 3: Run rocketserializer and generate JSON and CSV
 # =============================================================================
 
-def _build_output_name(ork_path):
-    """
-    Extracts the rocket name from the .ork file name.
-
-    For example, from "ork_files/MyRocket_v1.ork" it extracts "MyRocket_v1".
-
-    Parameters
-    ----------
-    ork_path : str
-        Path to the .ork file.
-
-    Returns
-    -------
-    str
-        Rocket name without extension or path.
-    """
-    file_name = os.path.basename(ork_path)
-    name_no_ext = os.path.splitext(file_name)[0]
-    return name_no_ext
-
-
 def _verify_java():
     """
     Verifies that Java is installed and accessible from the terminal.
@@ -616,7 +595,6 @@ def run_serialization(ork_path, jar_path, output_path="parameters/rocket/", verb
 
     ork_abs     = os.path.abspath(ork_path)
     output_abs  = os.path.abspath(output_path)
-    rocket_name = _build_output_name(ork_path)
 
     verbose_flag = "True" if verbose else "False"
 
@@ -726,9 +704,10 @@ def run_serialization(ork_path, jar_path, output_path="parameters/rocket/", verb
     # -------------------------------------------------------------------------
     # Build the paths of the generated files
     # -------------------------------------------------------------------------
-    # rocketserializer names output files using the .ork file name
-    json_path = os.path.join(output_abs, f"parameters_{rocket_name}.json")
-    csv_path  = os.path.join(output_abs, f"drag_{rocket_name}.csv")
+    # rocketserializer always generates files with these fixed names,
+    # regardless of the .ork file name.
+    json_path = os.path.join(output_abs, "parameters.json")
+    csv_path  = os.path.join(output_abs, "drag_curve.csv")
 
     # Verify that the files were actually generated
     generated_files = {}
@@ -758,6 +737,212 @@ def run_serialization(ork_path, jar_path, output_path="parameters/rocket/", verb
 
     return generated_files
 
+# =============================================================================
+# BLOCK 4: Rename, standardize, validate and register the generated files
+# =============================================================================
+
+def rename_files(ork_file):
+    """
+    Rename the generated JSON and drag CSV files based on the .ork file name.
+
+    This function takes the name of an OpenRocket (.ork) file and renames the
+    generated 'parameters.json' and 'drag_curve.csv' files accordingly. It also
+    ensures that no existing files are overwritten by appending a counter if needed.
+    Additionally, it removes any existing thrust source file.
+
+    Parameters
+    ----------
+    ork_file : str or Path
+        Path to the .ork file used as reference for naming.
+
+    Returns
+    -------
+    tuple(Path, Path)
+        Paths to the renamed JSON and CSV files.
+
+    Example
+    -------
+    >>> json_file, csv_file = rename_files("ork_files/AURORA_v02.ork")
+    >>> print(json_file)
+    PosixPath('parameters/rocket/AURORA_v02_OPR.json')
+    """
+    ork_file = Path(ork_file)
+
+    json_base = ork_file.stem + "_OPR"
+    csv_base  = "drag_curve_" + ork_file.stem
+
+    json_original = Path("parameters/rocket/parameters.json")
+    csv_original  = Path("parameters/rocket/drag_curve.csv")
+    thrust_file   = Path("parameters/rocket/thrust_source.csv")
+
+    # Remove the thrust source file if it exists (not needed)
+    if thrust_file.exists():
+        thrust_file.unlink()
+
+    def get_unique_name(path, name, suffix):
+        # If a file with that name already exists, append a counter
+        new_path = path.with_name(name + suffix)
+        counter = 1
+        while new_path.exists():
+            new_path = path.with_name(f"{name}({counter}){suffix}")
+            counter += 1
+        return new_path
+
+    json_new = get_unique_name(json_original, json_base, ".json")
+    csv_new  = get_unique_name(csv_original, csv_base, ".csv")
+
+    json_original.rename(json_new)
+    if csv_original.exists():
+        csv_original.rename(csv_new)
+
+    return json_new, csv_new
+
+
+def verify_file(path):
+    """
+    Verify that a file exists at the specified path.
+
+    Parameters
+    ----------
+    path : Path
+        Path to the file to be checked.
+
+    Returns
+    -------
+    bool
+        True if the file exists, False otherwise.
+
+    Example
+    -------
+    >>> verify_file(Path("parameters/rocket/AURORA_v02_OPR.json"))
+    True
+    """
+    return path.exists()
+
+
+def standardize_file(route):
+    """
+    Standardize the structure of a RocketPy JSON file.
+
+    This function reformats the JSON file generated by the serializer to match
+    a predefined structure. It renames keys, removes unnecessary fields, and
+    restructures nested data such as fins and parachutes.
+
+    Parameters
+    ----------
+    route : Path
+        Path to the JSON file to be standardized.
+
+    Returns
+    -------
+    dict
+        The modified data dictionary after standardization.
+
+    Example
+    -------
+    >>> data = standardize_file(Path("parameters/rocket/AURORA_v02_OPR.json"))
+    >>> print(list(data.keys()))
+    ['fins', 'nosecone', 'airframe', 'parachutes', ...]
+    """
+    with open(route, "r") as f:
+        data = json.load(f)
+
+    # FINS: normalize fin key name (e.g. "trapezoidalfins" -> "fins")
+    for key in list(data.keys()):
+        if key.endswith("fins"):
+            data["fins"] = data.pop(key, None)
+
+    # If fins are stored under a "0" key, unwrap them
+    if "fins" in data and "0" in data["fins"]:
+        data["fins"] = data["fins"]["0"]
+
+    # PARACHUTES: rename first parachute entry to "main"
+    if "parachutes" in data:
+        parachutes = data["parachutes"]
+        for key in list(parachutes.keys()):
+            parachutes["main"] = parachutes.pop(key)
+            break
+
+    # Remove fields not used by the simulation code
+    data.pop("motors", None)
+    data["nosecone"]  = data.pop("nosecones", None)
+    data["airframe"]  = data.pop("rocket", None)
+    data.pop("id", None)
+    data.pop("stored_results", None)
+    data.pop("flight", None)
+    data.pop("environment", None)
+    data.pop("tails", None)
+
+    with open(route, "w") as f:
+        json.dump(data, f, indent=4)
+
+    return data
+
+
+def verify_format(data):
+    """
+    Validate that the JSON data meets the minimum required format.
+
+    This function checks whether essential keys are present and contain
+    valid (non-None) data. These keys are required by the simulation
+    code in src/.
+
+    Parameters
+    ----------
+    data : dict
+        Dictionary containing the JSON data.
+
+    Returns
+    -------
+    bool
+        True if the data meets the required format, False otherwise.
+
+    Example
+    -------
+    >>> verify_format({"fins": {...}, "nosecone": {...}, "airframe": {...}, "parachutes": {...}})
+    True
+    """
+    required_keys = ["fins", "nosecone", "airframe", "parachutes"]
+    return all(key in data and data[key] is not None for key in required_keys)
+
+
+def update_supported_list(json_path):
+    """
+    Update the list of supported rocket configurations.
+
+    This function adds the name of the processed JSON file to a text file
+    (parameters/supported.txt) containing all registered configurations,
+    avoiding duplicates.
+
+    Parameters
+    ----------
+    json_path : Path
+        Path to the JSON file to be recorded.
+
+    Returns
+    -------
+    None
+
+    Example
+    -------
+    >>> update_supported_list(Path("parameters/rocket/AURORA_v02_OPR.json"))
+    # Adds "AURORA_v02_OPR.json" to parameters/supported.txt
+    """
+    txt_path = Path("parameters/supported.txt")
+    name = json_path.name
+
+    if txt_path.exists():
+        with open(txt_path, "r") as f:
+            lines = f.read().splitlines()
+    else:
+        lines = []
+
+    if name not in lines:
+        lines.append(name)
+
+    with open(txt_path, "w") as f:
+        for line in lines:
+            f.write(line + "\n")
 
 # =============================================================================
 # MAIN FUNCTION: Runs the complete workflow
@@ -821,6 +1006,7 @@ def run_full_workflow(ork_path=None, jar_path=None,
     ...     output_path = "parameters/rocket/"
     ... )
     """
+    
     print("\n" + "="*60)
     print("  ROCKET SERIALIZER - Complete workflow")
     print("="*60)
@@ -877,21 +1063,51 @@ def run_full_workflow(ork_path=None, jar_path=None,
         verbose=verbose
     )
 
+    # ── Block 4: Rename, standardize, validate and register ──────────────────
+    print("\n" + "="*60)
+    print("BLOCK 4: Processing generated files...")
+    print("="*60)
+
+    # Rename files based on the .ork name
+    json_file, csv_file = rename_files(verified_ork)
+    print(f"\n  [OK] Files renamed:")
+    print(f"    JSON : {json_file}")
+    print(f"    CSV  : {csv_file}")
+
+    # Verify the renamed JSON exists
+    if not verify_file(json_file):
+        raise ValueError("The JSON was not saved correctly")
+
+    # Standardize the JSON structure
+    data = standardize_file(json_file)
+    print(f"\n  [OK] JSON standardized.")
+
+    # Validate minimum required format
+    if not verify_format(data):
+        raise ValueError("The file does not conform to the standard format")
+    print(f"  [OK] Format verified.")
+
+    # Register the file in the supported list
+    update_supported_list(json_file)
+    print(f"  [OK] Registered in supported.txt.")
+
     # ── Final summary ─────────────────────────────────────────────────────────
     print("\n" + "="*60)
     print("  PROCESS COMPLETED SUCCESSFULLY")
     print("="*60)
     print()
-    print("  Generated files:")
-    if "json" in files:
-        print(f"    Parameter JSON : {files['json']}")
-    if "csv" in files:
-        print(f"    Drag CSV       : {files['csv']}")
+    print("  Final files:")
+    print(f"    Parameter JSON : {json_file}")
+    print(f"    Drag CSV       : {csv_file}")
     print()
     print("  These files are ready to be used in the simulation code (src/).")
     print("="*60 + "\n")
 
-    return files
+    return {
+        "json":     json_file,
+        "csv":      csv_file,
+        "ork_path": verified_ork
+    }
 
 
 # =============================================================================
@@ -949,3 +1165,5 @@ if __name__ == "__main__":
         search_folder=folder,
         verbose=False
     )
+    
+    
