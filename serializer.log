@@ -1,0 +1,463 @@
+2026.Apr.10 05:51:37 - rocketserializer._helpers - INFO - Successfully extracted rocket.ork from "C:/Users/luyfe/OneDrive/Documentos/GitHub/SIM-01/parameters/rocket/Aurora_version_04.ork" to "C:/Users/luyfe/OneDrive/Documentos/GitHub/SIM-01/parameters/rocket"
+2026.Apr.10 05:51:37 - rocketserializer._helpers - INFO - Successfully parsed .ork file at 'C:/Users/luyfe/OneDrive/Documentos/GitHub/SIM-01/parameters/rocket/rocket.ork' with 3957 datapoints
+2026.Apr.10 05:51:37 - orhelper._orhelper - INFO - Starting JVM from C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot\bin\server\jvm.dll CLASSPATH=C:\Users\luyfe\OneDrive\Documentos\GitHub\SIM-01\OpenRocket-23.09.jar
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Successfully initialized vectors with 1934 datapoints
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Initialized data vectors from the ORK file.
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - Collected motor geometry: motor length and motor radius.
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - The motor dry mass is 16.000 kg.
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - The total propellant mass is 22.434 kg. The motor dry mass is 16.000 kg.
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - Calculated motor mass properties.
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - Successfully configured the motor.
+                        grain_density: 1243.19954132881
+                       grain_initial_inner_radius: 0.0381
+                       grain_outer_radius: 0.0762
+                       grain_initial_height: 1.319
+                       nozzle_radius: 0.057150000000000006
+                       throat_radius: 0.0381
+                       dry_mass: 0
+                       dry_inertia: (0, 0, 0)
+                       center_of_dry_mass_position: 0
+                       grains_center_of_mass_position: 0
+                       grain_number: 1
+                       grain_separation: 0
+                       nozzle_position: -0.6595
+                       coordinate_system_orientation: nozzle_to_combustion_chamber
+
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - The motor dry mass is 16.000 kg.
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - The total propellant mass is 22.434 kg. The motor dry mass is 16.000 kg.
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Motor parameters retrieved.
+2026.Apr.10 05:51:44 - rocketserializer.components.id - INFO - Collected the rocket name: 'Aurora Mission - Volta Rocketry'
+2026.Apr.10 05:51:44 - rocketserializer.components.id - INFO - Collected the comment saved in the file: Fins Code F2T3 with CD value at 0.85M that is equal to 0.0083733. Upper Fins Means the RADIAL ZERO for Reference Locations in the Rocket.
+2026.Apr.10 05:51:44 - rocketserializer.components.id - INFO - Collected the designer name: VOLTA UDEA
+2026.Apr.10 05:51:44 - rocketserializer.components.id - INFO - Identification information extracted.
+                        rocket_name: Aurora Mission - Volta Rocketry
+                       comment: Fins Code F2T3 with CD value at 0.85M that is equal to 0.0083733. Upper Fins Means the RADIAL ZERO for Reference Locations in the Rocket.
+                       designer: VOLTA UDEA
+                       filepath: C:/Users/luyfe/OneDrive/Documentos/GitHub/SIM-01/parameters/rocket/rocket.ork
+
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Metadata parameters retrieved.
+2026.Apr.10 05:51:44 - rocketserializer.components.environment - INFO - Collected first environment settings: latitude, longitude, elevation, wind_average, wind_turbulence, geodetic_method
+2026.Apr.10 05:51:44 - rocketserializer.components.environment - WARNING - No base temperature was found in the .ork file. The base temperature will be set to None.
+2026.Apr.10 05:51:44 - rocketserializer.components.environment - WARNING - No base pressure was found in the .ork file. The base pressure will be set to None.
+2026.Apr.10 05:51:44 - rocketserializer.components.environment - INFO - Successfully extracted all the environment settings.
+                        latitude: 32.0
+                       longitude: -106.0
+                       elevation: 1308.0
+                       wind_average: 10.0
+                       wind_turbulence: 0.1
+                       geodetic_method: wgs84
+                       base_temperature: None
+                       base_pressure: None
+                       date: None
+
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Environment parameters retrieved.
+2026.Apr.10 05:51:44 - rocketserializer.components.rocket - INFO - The maximum radius of the rocket is: 0.087500
+2026.Apr.10 05:51:44 - rocketserializer.components.rocket - INFO - Collected rocket radius.
+2026.Apr.10 05:51:44 - rocketserializer.components.rocket - INFO - Collected rocket mass.
+2026.Apr.10 05:51:44 - rocketserializer.components.rocket - INFO - The moment of inertia of the rocket is: 37.374000 (longitudinal) and 0.182000 (rotational)
+2026.Apr.10 05:51:44 - rocketserializer.components.rocket - INFO - Collected rocket inertia.
+2026.Apr.10 05:51:44 - rocketserializer.components.rocket - INFO - Collected rocket center of mass.
+2026.Apr.10 05:51:44 - rocketserializer.components.rocket - INFO - All the Rocket information was collected:
+                       radius: 0.08750000000000001
+                       mass: 41.587
+                       inertia: (0.182, 0.182, 37.374)
+                       center_of_mass_without_propellant: 2.226
+                       coordinate_system_orientation: nose_to_tail
+
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Rocket parameters retrieved.
+2026.Apr.10 05:51:44 - rocketserializer.components.flight - INFO - Collected launch conditions: launch rod length, launch rod angle, launch rod direction.
+2026.Apr.10 05:51:44 - rocketserializer.components.flight - INFO - Exported launch conditions.
+                       rail_length: 5.3
+                       inclination: 86.0
+                       heading: 90.0
+
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Flight conditions retrieved.
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Aurora Mission - Volta Rocketry' of type 'Rocket'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Etapa principal' of type 'AxialStage'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Nosecone - Von Karman 5:1' of type 'NoseCone'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Parachute' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Nosecone Metal Section - A' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Nosecone Metal Section - B' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Eye Bolt - Nosecone' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Quick Link to Eye Bolt' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Pressurization Bulkhead ' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Main Shock Cord - 1st Part - Doubled' of type 'ShockCord'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Main Shock Cord - 1st Part - Doubled'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Main Shock Cord - 1st Part - Doubled'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Main Shock Cord - 1st Part - Doubled' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Pilot' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Reefing System' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Nosecone - Von Karman 5:1'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Nosecone - Von Karman 5:1'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Nosecone - Von Karman 5:1' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Fuselage - Section A' of type 'BodyTube'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Payload' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Quick Link to Pilot' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Quick Link to Deployment Bag' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Swivel Link' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Nomex Blanket' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Dispenser' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Quick Link to Eye Bolt (Bulkhead)' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'BP - 1' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'BP - 2' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Main Shock Cord - 2nd Part - Doubled' of type 'ShockCord'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Main Shock Cord - 2nd Part - Doubled'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Main Shock Cord - 2nd Part - Doubled'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Main Shock Cord - 2nd Part - Doubled' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Main Piston' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Bulkhead de eyección ' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Eye Bolt + Nut + Lock Washer' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Instrumentation Weight' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Fuselage - Section A'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Fuselage - Section A'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Fuselage - Section A' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Fuselage + Coupler Pieces' of type 'Transition'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Avionics - Module A' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Avionics - Module C' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Camera System - Module B' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Mass Component' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Fuselage + Coupler Pieces'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Fuselage + Coupler Pieces'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Fuselage + Coupler Pieces' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Fuselage - Section B' of type 'BodyTube'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Clipped Delta Trapezoidal Fins - F2T3' of type 'TrapezoidFinSet'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Clipped Delta Trapezoidal Fins - F2T3'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Clipped Delta Trapezoidal Fins - F2T3'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Clipped Delta Trapezoidal Fins - F2T3' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Thrust Disk - Main Thrust Transmitter' of type 'EngineBlock'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Thrust Disk - Main Thrust Transmitter'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Thrust Disk - Main Thrust Transmitter'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Thrust Disk - Main Thrust Transmitter' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Thrust Disk and Centerin Ring' of type 'EngineBlock'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Thrust Disk and Centerin Ring'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Thrust Disk and Centerin Ring'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Thrust Disk and Centerin Ring' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Rail Button' of type 'RailButton'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Rail Button'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Rail Button'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Rail Button' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Fuselage - Section B'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Fuselage - Section B'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Fuselage - Section B' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Starting to process element 'Tailcone' of type 'Transition'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Tailcone'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Tailcone'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Tailcone' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Etapa principal'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Etapa principal'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Child 'Etapa principal' processed
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Moving to the next child
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - No more children for 'Aurora Mission - Volta Rocketry'
+2026.Apr.10 05:51:44 - rocketserializer.components.open_rocket_wrangler - INFO - Finished processing 'Aurora Mission - Volta Rocketry'
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - The elements are:
+                       -1351913039014078994: 
+                           type: Rocket
+                           name: Aurora Mission - Volta Rocketry
+                           length: 3.6400000000000006
+                           position: 0
+                       -6722418954498417350: 
+                           type: AxialStage
+                           name: Etapa principal
+                           length: 3.6330000000000005
+                           position: 3.6330000000000005
+                       -760559806252155238: 
+                           type: NoseCone
+                           name: Nosecone - Von Karman 5:1
+                           length: 0.875
+                           position: 0.0
+                       -6632555138815592144: 
+                           type: ShockCord
+                           name: Main Shock Cord - 1st Part - Doubled
+                           length: 0.03
+                           position: 1.431
+                       7827581355302901040: 
+                           type: BodyTube
+                           name: Fuselage - Section A
+                           length: 1.12
+                           position: 0.875
+                       -4235096265599144668: 
+                           type: ShockCord
+                           name: Main Shock Cord - 2nd Part - Doubled
+                           length: 0.04
+                           position: 2.5360000000000005
+                       6195896740685770360: 
+                           type: Transition
+                           name: Fuselage + Coupler Pieces
+                           length: 0.18
+                           position: 1.995
+                       6777505946720829575: 
+                           type: BodyTube
+                           name: Fuselage - Section B
+                           length: 1.3900000000000001
+                           position: 2.1750000000000003
+                       -308780135206632762: 
+                           type: TrapezoidFinSet
+                           name: Clipped Delta Trapezoidal Fins - F2T3
+                           length: 0.255
+                           position: 3.3000000000000007
+                       -8575451719906972497: 
+                           type: EngineBlock
+                           name: Thrust Disk - Main Thrust Transmitter
+                           length: 0.006999999999999999
+                           position: 3.8880000000000003
+                       -5450698885333155117: 
+                           type: EngineBlock
+                           name: Thrust Disk and Centerin Ring
+                           length: 0.006999999999999999
+                           position: 2.5770000000000004
+                       8270385513515204655: 
+                           type: RailButton
+                           name: Rail Button
+                           length: 0.0
+                           position: 3.8140000000000005
+                       -5315659286292189283: 
+                           type: Transition
+                           name: Tailcone
+                           length: 0.068
+                           position: 3.5650000000000004
+
+2026.Apr.10 05:51:44 - rocketserializer.components.nose_cone - INFO - Collected the dimensions of the nosecone: length, shape and position.
+2026.Apr.10 05:51:44 - rocketserializer.components.nose_cone - INFO - Nosecone is a haack nosecone, searching for the shape parameter
+2026.Apr.10 05:51:44 - rocketserializer.components.nose_cone - INFO - Shape parameter of the nosecone: 0.0
+2026.Apr.10 05:51:44 - rocketserializer.components.nose_cone - INFO - Nosecone setting defined:
+                        name: Nosecone - Von Karman 5:1
+                       kind: Von Karman
+                       length: 0.875
+                       base_radius: 0.08750000000000001
+                       position: 0.0
+
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - A total of 1 trapezoidal fin sets were detected
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Starting collecting the settings for the trapezoidal fin set number '0'
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Found the element 'Clipped Delta Trapezoidal Fins - F2T3' in the elements dictionary.
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Number of fins retrieved: 4
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Root chord retrieved: 0.255000
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Tip chord retrieved: 0.075000
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Span retrieved: 0.210000
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Sweep length and angle retrieved: 0.19582816808890896, None
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Cant angle retrieved: 0.000000
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Crosssection format retrieved
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Trapezoidal fin set number '0' was defined:
+                       name: Clipped Delta Trapezoidal Fins - F2T3
+                       number: 4
+                       root_chord: 0.255
+                       tip_chord: 0.075
+                       span: 0.21
+                       position: 3.3000000000000007
+                       sweep_length: 0.19582816808890896
+                       sweep_angle: None
+                       cant_angle: 0.0
+                       section: airfoil
+
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Finished collecting all the trapezoidal fins.
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - A total of 0 elliptical fin sets were detected
+2026.Apr.10 05:51:44 - rocketserializer.components.fins - INFO - Since no elliptical fins were detected, returning empty dictionary
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - A total of 2 transitions were found
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - Starting to collect the settings of the transition number 0
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - Collected the name of the transition number 0
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - Collected the dimensions of the transition number 0
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - The transition number 0 was defined with the following settings:
+                       name: Fuselage + Coupler Pieces
+                       top_radius: 0.08750000000000001
+                       bottom_radius: auto 0.08750000000000001
+                       length: 0.18
+                       position: 1.995
+
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - Starting to collect the settings of the transition number 1
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - Collected the name of the transition number 1
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - Collected the dimensions of the transition number 1
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - The transition number 1 was defined with the following settings:
+                       name: Tailcone
+                       top_radius: 0.08750000000000001
+                       bottom_radius: 0.08
+                       length: 0.068
+                       position: 3.5650000000000004
+
+2026.Apr.10 05:51:44 - rocketserializer.components.transition - INFO - All the 2 transition settings were defined
+2026.Apr.10 05:51:44 - rocketserializer.components.rail_buttons - INFO - Could not fetch a pair of rail buttons
+2026.Apr.10 05:51:44 - rocketserializer.components.parachute - INFO - A total of 1 parachutes were detected
+2026.Apr.10 05:51:44 - rocketserializer.components.parachute - INFO - Starting to collect the settings of the parachute number 0
+2026.Apr.10 05:51:44 - rocketserializer.components.parachute - INFO - Parachute 'Parachute' has a drag coefficient of 0.750000
+2026.Apr.10 05:51:44 - rocketserializer.components.parachute - INFO - Parachute 'Parachute' will deploy at apogee
+2026.Apr.10 05:51:44 - rocketserializer.components.parachute - INFO - The Parachute number 0 had its settings defined:
+                       name: Parachute
+                       cd: 0.75
+                       cds: 6.689766301416361
+                       area: 8.91968840188848
+                       deploy_event: apogee
+                       deploy_delay: 0.0
+                       deploy_altitude: None
+
+2026.Apr.10 05:51:44 - rocketserializer.components.parachute - INFO - All parachutes settings were collected
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Found the 'flightdata' tag in the 'simulation' tag.
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'max_altitude' value from the .ork file: 6695.438
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'max_velocity' value from the .ork file: 466.194
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'max_acceleration' value from the .ork file: 94.515
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'max_mach' value from the .ork file: 1.415
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'time_to_apogee' value from the .ork file: 35.765
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'flight_time' value from the .ork file: 620.08
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'ground_hit_velocity' value from the .ork file: 9.95
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - Retrieved the 'launch_rod_velocity' value from the .ork file: 28.017
+2026.Apr.10 05:51:44 - rocketserializer.components.stored_results - INFO - The flight data was successfully retrieved:
+                       max_altitude: 6695.438
+                       max_velocity: 466.194
+                       max_acceleration: 94.515
+                       max_mach: 1.415
+                       time_to_apogee: 35.765
+                       flight_time: 620.08
+                       ground_hit_velocity: 9.95
+                       launch_rod_velocity: 28.017
+                       max_stability_margin: 4.888
+                       min_stability_margin: 0.0
+                       burnout_stability_margin: 4.888
+                       max_thrust: 5062.683
+
+2026.Apr.10 05:51:44 - rocketserializer.components.drag_curve - INFO - Collected altitude vector
+2026.Apr.10 05:51:44 - rocketserializer.components.drag_curve - INFO - Removed data after apogee
+2026.Apr.10 05:51:44 - rocketserializer.components.drag_curve - INFO - Collected drag coefficient and Mach number
+2026.Apr.10 05:51:44 - rocketserializer.components.drag_curve - INFO - Successfully created the drag curve
+2026.Apr.10 05:51:44 - rocketserializer.components.drag_curve - INFO - Successfully saved the drag curve file to: 'C:/Users/luyfe/OneDrive/Documentos/GitHub/SIM-01/parameters/rocket/drag_curve.csv'
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Drag curve generated.
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - Collected thrust vector
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - The thrust points were sorted to be in ascending order
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - Successfully clipped the thrust curve to remove negative values
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - Successfully created the thrust curve
+2026.Apr.10 05:51:44 - rocketserializer.components.motor - INFO - Successfully saved the thrust curve to: 'C:/Users/luyfe/OneDrive/Documentos/GitHub/SIM-01/parameters/rocket/thrust_source.csv'
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Thrust curve generated.
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Extraction completed. A dictionary with all the parameters was generated.
+2026.Apr.10 05:51:44 - rocketserializer.ork_extractor - INFO - Dictionary with the parameters:
+                       id: 
+                           rocket_name: Aurora Mission - Volta Rocketry
+                           comment: Fins Code F2T3 with CD value at 0.85M that is equal to 0.0083733. Upper Fins Means the RADIAL ZERO for Reference Locations in the Rocket.
+                           designer: VOLTA UDEA
+                           filepath: C:/Users/luyfe/OneDrive/Documentos/GitHub/SIM-01/parameters/rocket/rocket.ork
+                       environment: 
+                           latitude: 32.0
+                           longitude: -106.0
+                           elevation: 1308.0
+                           wind_average: 10.0
+                           wind_turbulence: 0.1
+                           geodetic_method: wgs84
+                           base_temperature: None
+                           base_pressure: None
+                           date: None
+                       rocket: 
+                           radius: 0.08750000000000001
+                           mass: 41.587
+                           inertia: (0.182, 0.182, 37.374)
+                           center_of_mass_without_propellant: 2.226
+                           coordinate_system_orientation: nose_to_tail
+                           drag_curve: C:\Users\luyfe\OneDrive\Documentos\GitHub\SIM-01\parameters\rocket\drag_curve.csv
+                       nosecones: 
+                           name: Nosecone - Von Karman 5:1
+                           kind: Von Karman
+                           length: 0.875
+                           base_radius: 0.08750000000000001
+                           position: 0.0
+                       trapezoidal_fins: 
+                           0: 
+                               name: Clipped Delta Trapezoidal Fins - F2T3
+                               number: 4
+                               root_chord: 0.255
+                               tip_chord: 0.075
+                               span: 0.21
+                               position: 3.3000000000000007
+                               sweep_length: 0.19582816808890896
+                               sweep_angle: None
+                               cant_angle: 0.0
+                               section: airfoil
+                       elliptical_fins: 
+                       tails: 
+                           0: 
+                               name: Fuselage + Coupler Pieces
+                               top_radius: 0.08750000000000001
+                               bottom_radius: auto 0.08750000000000001
+                               length: 0.18
+                               position: 1.995
+                           1: 
+                               name: Tailcone
+                               top_radius: 0.08750000000000001
+                               bottom_radius: 0.08
+                               length: 0.068
+                               position: 3.5650000000000004
+                       parachutes: 
+                           0: 
+                               name: Parachute
+                               cd: 0.75
+                               cds: 6.689766301416361
+                               area: 8.91968840188848
+                               deploy_event: apogee
+                               deploy_delay: 0.0
+                               deploy_altitude: None
+                       rail_buttons: 
+                       motors: 
+                           grain_density: 1243.19954132881
+                           grain_initial_inner_radius: 0.0381
+                           grain_outer_radius: 0.0762
+                           grain_initial_height: 1.319
+                           nozzle_radius: 0.057150000000000006
+                           throat_radius: 0.0381
+                           dry_mass: 0
+                           dry_inertia: (0, 0, 0)
+                           center_of_dry_mass_position: 0
+                           grains_center_of_mass_position: 0
+                           grain_number: 1
+                           grain_separation: 0
+                           nozzle_position: -0.6595
+                           coordinate_system_orientation: nozzle_to_combustion_chamber
+                           position: 2.9793896763840606
+                           thrust_source: C:\Users\luyfe\OneDrive\Documentos\GitHub\SIM-01\parameters\rocket\thrust_source.csv
+                       flight: 
+                           rail_length: 5.3
+                           inclination: 86.0
+                           heading: 90.0
+                       stored_results: 
+                           max_altitude: 6695.438
+                           max_velocity: 466.194
+                           max_acceleration: 94.515
+                           max_mach: 1.415
+                           time_to_apogee: 35.765
+                           flight_time: 620.08
+                           ground_hit_velocity: 9.95
+                           launch_rod_velocity: 28.017
+                           max_stability_margin: 4.888
+                           min_stability_margin: 0.0
+                           burnout_stability_margin: 4.888
+                           max_thrust: 5062.683
+
+2026.Apr.10 05:51:45 - orhelper._orhelper - INFO - JVM shut down

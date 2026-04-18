@@ -779,7 +779,7 @@ def verify_file(path):
     return path.exists()
 
 
-def standardize_file(route):
+def standardize_file(route, csv_path):
     """
     Standardize the structure of a RocketPy JSON file.
 
@@ -821,6 +821,8 @@ def standardize_file(route):
         for key in list(parachutes.keys()):
             parachutes["main"] = parachutes.pop(key)
             break
+        if parachutes["main"]["deploy_altitude"] is None:
+            parachutes["main"]["deploy_altitude"] = "apogee"
 
     # Remove fields not used by the simulation code
     data.pop("motors", None)
@@ -832,6 +834,18 @@ def standardize_file(route):
     data.pop("environment", None)
     data.pop("tails", None)
 
+    # Fix drag curve path to match renamed CSV
+    if "airframe" in data and csv_path is not None:
+        data["airframe"]["drag_curve"] = str(csv_path)
+
+    if "fins" in data:
+        fins = data["fins"]
+        data["airframe"]["rocket_length"] = fins["position"] + fins["root_chord"]
+    
+    if "airframe" in data and "drag_curve" in data["airframe"]:
+        drag_path = data["airframe"].pop("drag_curve")
+        data["airframe"]["power_on_drag"] = drag_path
+        data["airframe"]["power_off_drag"] = drag_path
     with open(route, "w") as f:
         json.dump(data, f, indent=4)
 
@@ -1038,7 +1052,7 @@ def run_full_workflow(ork_path=None, jar_path=None,
         raise ValueError("The JSON was not saved correctly")
 
     # Standardize the JSON structure
-    data = standardize_file(json_file)
+    data = standardize_file(json_file, csv_file)
     print(f"\n  [OK] JSON standardized.")
 
     # Validate minimum required format
