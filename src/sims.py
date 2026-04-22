@@ -73,7 +73,7 @@ class File_simulation():
         :return: True if the rocket configuration is supported.
         :raises ValueError: If the rocket configuration is not supported.
         """
-        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03"]
+        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03", "IREC_version04"]
         if self.file_name in files_supported:
             return True
         else:
@@ -231,7 +231,7 @@ class File_simulation():
         cg_from_OR = self.cg_true
         mass_without_motor_OR = self.mass_true
         cp_from_OR = self.cp_true
-        Margin_OF_Error_CG_CP = 0.02
+        Margin_OF_Error_CG_CP = 0.03
         Margin_OF_ERROR_MASS = 0.2
         cp_from_RPY = self.rocket.cp_position(0)
         cg_from_RPY = self.rocket.center_of_mass(0)
@@ -1395,7 +1395,7 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     dz: resolución vertical [m]
     """
 
-"""
+    """
     Generate a layered atmospheric wind profile where each altitude band
     has its own base speed and direction, with optional stochastic
     perturbations applied independently per layer.
