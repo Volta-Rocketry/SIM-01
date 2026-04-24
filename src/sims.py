@@ -1395,7 +1395,7 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     dz: resolución vertical [m]
     """
 
-"""
+    """
     Generate a layered atmospheric wind profile where each altitude band
     has its own base speed and direction, with optional stochastic
     perturbations applied independently per layer.
