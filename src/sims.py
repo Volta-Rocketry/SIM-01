@@ -73,7 +73,7 @@ class File_simulation():
         :return: True if the rocket configuration is supported.
         :raises ValueError: If the rocket configuration is not supported.
         """
-        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03", "IREC_version04"]
+        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03", "IREC_version04","IREC_version_06(2)"]
         if self.file_name in files_supported:
             return True
         else:
@@ -155,8 +155,8 @@ class File_simulation():
             radius= airframe_data["radius"], # m
             mass= airframe_data["mass"],   # Kg
             inertia=tuple(airframe_data["inertia"]),  # Kg.m^2 with NO MOTOR
-            power_on_drag= 0.465,#airframe_data["power_on_drag"],
-            power_off_drag= 0.465,#airframe_data["power_off_drag"],
+            power_on_drag= airframe_data["power_on_drag"],
+            power_off_drag= airframe_data["power_off_drag"],
             center_of_mass_without_motor=airframe_data["center_of_mass_without_motor"],
             coordinate_system_orientation=airframe_data["coordinate_system_orientation"]
         )
