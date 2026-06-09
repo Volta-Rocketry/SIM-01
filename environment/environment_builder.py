@@ -38,9 +38,9 @@ from rocketpy import Environment
 # Fixed launch site data - IREC Midland, Texas
 # ---------------------------------------------------------------------------
 
-MIDLAND_LAT = 31.9686
-MIDLAND_LON = -102.0779
-MIDLAND_ELEV = 873.0
+MIDLAND_LAT = 31.047292
+MIDLAND_LON = -103.527281
+MIDLAND_ELEV = 890.0
 
 # Local time zone: CDT = UTC-5 in June
 MIDLAND_TIMEZONE = "America/Chicago"
@@ -295,7 +295,7 @@ class EnvironmentBuilder:
         if utc_hours is None:
             # 12Z = 7am CDT, 15Z = 10am CDT, 18Z = 1pm CDT
             # Covers the typical IREC launch time window
-            utc_hours = [12, 15, 18]
+            utc_hours = [12, 15, 18, 19, 20]
 
         envs = []
         labels = []

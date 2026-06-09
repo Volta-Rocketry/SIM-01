@@ -134,13 +134,13 @@ def _check_cdsapi():
 # ---------------------------------------------------------------------------
 
 # IREC launch site coordinates in Midland, Texas
-MIDLAND_LAT = 31.9686        # Decimal latitude [deg]
-MIDLAND_LON = -102.0779      # Decimal longitude [deg]
-MIDLAND_ELEV = 873.0         # Elevation above sea level [m]
+MIDLAND_LAT = 31.047292        # Decimal latitude [deg]
+MIDLAND_LON = -103.527281      # Decimal longitude [deg]
+MIDLAND_ELEV = 890.0         # Elevation above sea level [m]
 
 # Download bounding box [North, West, South, East]
 # Small box of ~150 km x 150 km centered over Midland
-AREA_BBOX = [33.0, -103.0, 31.5, -101.5]
+AREA_BBOX = [31.8, -104.3, 30.3, -102.8]
 
 # Historical years to download (10 years, IREC window June 15-20)
 HISTORICAL_YEARS = [str(y) for y in range(2015, 2025)]
@@ -151,7 +151,7 @@ COMPETITION_DAYS = ["15", "16", "17", "18", "19", "20"]
 # Representative UTC hours covering typical IREC launch times.
 # Launches are usually between 7am and 2pm local time (CDT = UTC-5),
 # which corresponds to 12:00 - 19:00 UTC.
-REPRESENTATIVE_HOURS_UTC = ["00:00", "06:00", "12:00", "15:00", "18:00"]
+REPRESENTATIVE_HOURS_UTC = ["00:00", "06:00", "12:00", "15:00", "18:00", "19:00", "20:00"]
 
 # Standard pressure levels (from surface up to ~30 km altitude).
 # RocketPy needs these levels to build the vertical wind and

@@ -1,0 +1,195 @@
+======================================================================
+  VOLTA – IREC 2026 | ERA5 Wind Statistical Analysis
+  Site: Midland, Texas | Period: June 15-20, 2015-2024
+======================================================================
+
+SECTION 1: Statistics per pressure level
+----------------------------------------------------------------------
+   Alt(m)  P(hPa)       N   U mean   U std   V mean   V std  Spd mean  Spd std   Dir°
+----------------------------------------------------------------------
+      110    1000  15120.0    -0.90    3.60     1.69    2.78      4.49     2.05  334.5
+      320     975  15120.0    -0.90    3.60     1.69    2.78      4.49     2.05  334.5
+      540     950  15120.0    -0.90    3.60     1.69    2.78      4.49     2.05  334.5
+      762     925  15120.0    -0.91    3.61     1.69    2.78      4.50     2.05  334.5
+      988     900  15120.0    -1.08    4.19     2.17    3.53      5.26     2.85  337.9
+     1220     875  15120.0    -0.85    4.71     2.67    4.36      6.01     3.59  345.4
+     1457     850  15120.0    -0.42    5.12     2.96    4.84      6.63     3.83  353.1
+     1700     825  15120.0     0.03    5.35     2.88    4.87      6.88     3.65    0.7
+     1949     800  15120.0     0.40    5.30     2.47    4.58      6.62     3.41    7.9
+     2206     775  15120.0     0.69    5.12     1.94    4.13      6.15     3.10   15.3
+     2469     750  15120.0     0.93    4.93     1.42    3.76      5.73     2.91   27.0
+     3012     700  15120.0     1.33    4.88     0.49    3.80      5.70     2.79   70.3
+     3591     650  15120.0     1.65    5.35    -0.05    4.39      6.43     3.06   98.7
+     4206     600  15120.0     2.13    6.23    -0.21    4.99      7.47     3.53  105.9
+     4865     550  15120.0     2.79    7.24    -0.24    5.33      8.51     4.03  107.6
+     5574     500  15120.0     3.15    7.86    -0.54    5.68      9.11     4.61  112.6
+     6344     450  15120.0     3.54    8.44    -0.98    6.56      9.84     5.56  112.3
+     7185     400  15120.0     4.35    9.17    -0.82    7.10     10.68     6.33  102.3
+     8117     350  15120.0     5.28   10.29    -0.29    7.58     11.86     7.13   92.0
+     9164     300  15120.0     7.04   12.00     0.43    8.18     13.71     8.52   83.2
+    10363     250  15120.0     9.49   13.34     1.00    8.34     15.68     9.64   87.3
+    11034     225  15120.0    11.37   14.11     1.15    8.40     16.85    10.78   88.8
+    11784     200  15120.0    12.62   14.63     1.19    8.30     17.57    11.62   88.4
+    12632     175  15120.0    12.58   14.37     1.24    7.76     16.98    11.77   87.5
+    13608     150  15120.0    11.49   12.54     1.54    6.72     15.06    10.49   83.4
+    14764     125  15120.0     8.50   10.07     2.03    5.63     12.00     8.10   75.3
+    16180     100  15120.0     2.84    6.60     1.57    4.41      7.49     4.18   54.6
+
+SECTION 2: Statistics by altitude band (Monte Carlo parametrization)
+----------------------------------------------------------------------
+
+  Band: Ground–1 km  (0–1000 m MSL)
+
+    [U]
+      Mean ± Std       :  -0.939 ± 3.722 m/s
+      Median (P50)     :  -1.477 m/s
+      P05 / P95        :  -6.454  /  5.619 m/s
+      % above mean     :  45.0%
+      % below mean     :  55.0%
+      Skewness         : +0.1444
+      MC distribution  : normal (μ=-0.939, σ=3.722)
+
+    [V]
+      Mean ± Std       :   1.783 ± 2.931 m/s
+      Median (P50)     :   1.823 m/s
+      P05 / P95        :  -2.942  /  6.615 m/s
+      % above mean     :  50.7%
+      % below mean     :  49.3%
+      Skewness         : -0.0134
+      MC distribution  : normal (μ=1.783, σ=2.931)
+
+    [SPEED]
+      Mean ± Std       :   4.649 ± 2.209 m/s
+      Median (P50)     :   4.359 m/s
+      P05 / P95        :   1.473  /  8.749 m/s
+      % above mean     :  45.0%
+      % below mean     :  55.0%
+      Skewness         : +0.1310
+      MC distribution  : normal (μ=4.649, σ=2.209)
+
+
+  Band: 1–3 km  (1000–3000 m MSL)
+
+    [U]
+      Mean ± Std       :   0.128 ± 5.089 m/s
+      Median (P50)     :  -0.207 m/s
+      P05 / P95        :  -7.639  /  8.603 m/s
+      % above mean     :  47.9%
+      % below mean     :  52.1%
+      Skewness         : +0.0659
+      MC distribution  : normal (μ=0.128, σ=5.089)
+
+    [V]
+      Mean ± Std       :   2.390 ± 4.422 m/s
+      Median (P50)     :   2.073 m/s
+      P05 / P95        :  -4.219  /  10.405 m/s
+      % above mean     :  46.9%
+      % below mean     :  53.1%
+      Skewness         : +0.0716
+      MC distribution  : normal (μ=2.390, σ=4.422)
+
+    [SPEED]
+      Mean ± Std       :   6.337 ± 3.413 m/s
+      Median (P50)     :   5.702 m/s
+      P05 / P95        :   1.821  /  13.054 m/s
+      % above mean     :  42.4%
+      % below mean     :  57.6%
+      Skewness         : +0.1860
+      MC distribution  : normal (μ=6.337, σ=3.413)
+
+
+  Band: 3–6 km  (3000–6000 m MSL)
+
+    [U]
+      Mean ± Std       :   2.211 ± 6.312 m/s
+      Median (P50)     :   1.969 m/s
+      P05 / P95        :  -7.451  /  12.470 m/s
+      % above mean     :  49.2%
+      % below mean     :  50.8%
+      Skewness         : +0.0383
+      MC distribution  : normal (μ=2.211, σ=6.312)
+
+    [V]
+      Mean ± Std       :  -0.108 ± 4.837 m/s
+      Median (P50)     :   0.076 m/s
+      P05 / P95        :  -8.197  /  7.844 m/s
+      % above mean     :  51.5%
+      % below mean     :  48.5%
+      Skewness         : -0.0379
+      MC distribution  : normal (μ=-0.108, σ=4.837)
+
+    [SPEED]
+      Mean ± Std       :   7.444 ± 3.601 m/s
+      Median (P50)     :   6.989 m/s
+      P05 / P95        :   2.308  /  14.092 m/s
+      % above mean     :  44.9%
+      % below mean     :  55.1%
+      Skewness         : +0.1264
+      MC distribution  : normal (μ=7.444, σ=3.601)
+
+
+  Band: 6–10 km  (6000–10000 m MSL)
+
+    [U]
+      Mean ± Std       :   5.052 ± 9.979 m/s
+      Median (P50)     :   3.644 m/s
+      P05 / P95        : -11.765  /  22.498 m/s
+      % above mean     :  44.9%
+      % below mean     :  55.1%
+      Skewness         : +0.1411
+      MC distribution  : normal (μ=5.052, σ=9.979)
+
+    [V]
+      Mean ± Std       :  -0.416 ± 7.354 m/s
+      Median (P50)     :   0.034 m/s
+      P05 / P95        : -12.991  /  10.597 m/s
+      % above mean     :  52.5%
+      % below mean     :  47.5%
+      Skewness         : -0.0612
+      MC distribution  : normal (μ=-0.416, σ=7.354)
+
+    [SPEED]
+      Mean ± Std       :  11.523 ± 6.886 m/s
+      Median (P50)     :  10.986 m/s
+      P05 / P95        :   2.214  /  24.309 m/s
+      % above mean     :  47.0%
+      % below mean     :  53.0%
+      Skewness         : +0.0779
+      MC distribution  : normal (μ=11.523, σ=6.886)
+
+
+  Band: 10–15 km  (10000–15000 m MSL)
+
+    [U]
+      Mean ± Std       :  11.010 ± 13.177 m/s
+      Median (P50)     :   8.863 m/s
+      P05 / P95        :  -8.741  /  35.963 m/s
+      % above mean     :  45.1%
+      % below mean     :  54.9%
+      Skewness         : +0.1629
+      MC distribution  : normal (μ=11.010, σ=13.177)
+
+    [V]
+      Mean ± Std       :   1.358 ± 7.526 m/s
+      Median (P50)     :   1.457 m/s
+      P05 / P95        : -11.540  /  13.969 m/s
+      % above mean     :  50.7%
+      % below mean     :  49.3%
+      Skewness         : -0.0131
+      MC distribution  : normal (μ=1.358, σ=7.526)
+
+    [SPEED]
+      Mean ± Std       :  15.689 ± 10.399 m/s
+      Median (P50)     :  13.950 m/s
+      P05 / P95        :   2.535  /  37.686 m/s
+      % above mean     :  44.4%
+      % below mean     :  55.6%
+      Skewness         : +0.1672
+      MC distribution  : normal (μ=15.689, σ=10.399)
+
+======================================================================
+  NOTE ON SKEWNESS:
+  Positive skewness → distribution tail toward higher values
+  (more extreme high-wind events than low-wind events).
+  Negative skewness → tail toward lower/more negative values.
+======================================================================

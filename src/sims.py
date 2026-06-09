@@ -73,7 +73,7 @@ class File_simulation():
         :return: True if the rocket configuration is supported.
         :raises ValueError: If the rocket configuration is not supported.
         """
-        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03"]
+        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03", "IREC_version_06(2)"]
         if self.file_name in files_supported:
             return True
         else:
@@ -117,7 +117,7 @@ class File_simulation():
 
         airframe_data = rocket_data["airframe"]
         nosecone_data = rocket_data["nosecone"]
-        rail_buttons_data = rocket_data["rail_buttons"]
+        #rail_buttons_data = rocket_data["rail_buttons"]
         fins_data = rocket_data["fins"]
         parachutes_data = rocket_data["parachutes"]
 
@@ -155,17 +155,17 @@ class File_simulation():
             radius= airframe_data["radius"], # m
             mass= airframe_data["mass"],   # Kg
             inertia=tuple(airframe_data["inertia"]),  # Kg.m^2 with NO MOTOR
-            power_on_drag= 0.465,#airframe_data["power_on_drag"],
-            power_off_drag= 0.465,#airframe_data["power_off_drag"],
+            power_on_drag= airframe_data["power_on_drag"],
+            power_off_drag= airframe_data["power_off_drag"],
             center_of_mass_without_motor=airframe_data["center_of_mass_without_motor"],
             coordinate_system_orientation=airframe_data["coordinate_system_orientation"]
         )
 
-        self.rail_buttons = self.rocket.set_rail_buttons(
-            upper_button_position= rail_buttons_data["upper_position"],
-            lower_button_position= rail_buttons_data["upper_position"] + rail_buttons_data["distance"],
-            angular_position=rail_buttons_data["angular_position"],
-        )
+        #self.rail_buttons = self.rocket.set_rail_buttons(
+        #    upper_button_position= rail_buttons_data["upper_position"],
+        #    lower_button_position= rail_buttons_data["upper_position"] + rail_buttons_data["distance"],
+        #    angular_position=rail_buttons_data["angular_position"],
+        #)
 
         self.nose_cone = self.rocket.add_nose(
             length=nosecone_data["length"],
@@ -231,7 +231,7 @@ class File_simulation():
         cg_from_OR = self.cg_true
         mass_without_motor_OR = self.mass_true
         cp_from_OR = self.cp_true
-        Margin_OF_Error_CG_CP = 0.02
+        Margin_OF_Error_CG_CP = 0.03
         Margin_OF_ERROR_MASS = 0.2
         cp_from_RPY = self.rocket.cp_position(0)
         cg_from_RPY = self.rocket.center_of_mass(0)
@@ -299,7 +299,7 @@ class File_simulation():
         self.env_ready_for_simulation = True
 
     def run_single_flight_sim(self, env, rail_length, inclination, heading):
-       
+    
         """
         Execute a single flight simulation.
 
@@ -740,11 +740,11 @@ def extract_maximum_values_sim_data(sim):
         max_stability_margin = sim.max_stability_margin # calibers
         max_stability_margin_time = sim.max_stability_margin_time # s
 
-        max_upper_rb_normal_force = sim.max_rail_button1_normal_force # N
-        max_upper_rb_shear_force = sim.max_rail_button1_shear_force # N
+        #max_upper_rb_normal_force = sim.max_rail_button1_normal_force # N
+        #max_upper_rb_shear_force = sim.max_rail_button1_shear_force # N
 
-        max_lower_rb_normal_force = sim.max_rail_button2_normal_force # N
-        max_lower_rb_shear_force = sim.max_rail_button2_shear_force # N
+        #max_lower_rb_normal_force = sim.max_rail_button2_normal_force # N
+        #max_lower_rb_shear_force = sim.max_rail_button2_shear_force # N
         
 
         max_values_data = {
@@ -766,10 +766,10 @@ def extract_maximum_values_sim_data(sim):
             "max_Gs_power_off_time": max_Gs_power_off_time,
             "max_stability_margin": max_stability_margin,
             "max_stability_margin_time": max_stability_margin_time,
-            "max_upper_rb_normal_force": max_upper_rb_normal_force,
-            "max_upper_rb_shear_force": max_upper_rb_shear_force,
-            "max_lower_rb_normal_force": max_lower_rb_normal_force,
-            "max_lower_rb_shear_force": max_lower_rb_shear_force
+            #"max_upper_rb_normal_force": max_upper_rb_normal_force,
+            #"max_upper_rb_shear_force": max_upper_rb_shear_force,
+            #"max_lower_rb_normal_force": max_lower_rb_normal_force,
+            #"max_lower_rb_shear_force": max_lower_rb_shear_force
         }
 
         return max_values_data
@@ -1243,14 +1243,14 @@ def generate_cte_wind_nsy_angle(lat, lon, elev, angle, speed, turbulence, deviat
     :param lon: Launch site longitude in decimal degrees.
     :param elev: Launch site elevation above sea level in meters.
     :param angle: Base wind direction in degrees. Meteorological convention:
-                  0 = North, 90 = East, 180 = South, 270 = West.
+                0 = North, 90 = East, 180 = South, 270 = West.
     :param speed: Wind speed magnitude in m/s, constant at all altitudes.
     :param turbulence: Dimensionless relative turbulence intensity coefficient.
-                       Scales the amplitude of the filtered directional noise.
+                    Scales the amplitude of the filtered directional noise.
     :param deviation: Absolute deviation scale in degrees. Controls the
-                      angular spread of the perturbation around the base angle.
+                    angular spread of the perturbation around the base angle.
     :return: RocketPy Environment instance configured with the generated
-             custom atmospheric wind profile.
+            custom atmospheric wind profile.
     """    
     
     cutoff = 0.05
@@ -1324,18 +1324,18 @@ def generate_nsy_wind_nsy_angle(lat, lon, elev, angle, speed, speed_turbulence, 
     :param lon: Launch site longitude in decimal degrees.
     :param elev: Launch site elevation above sea level in meters.
     :param angle: Base wind direction in degrees. Meteorological convention:
-                  0 = North, 90 = East, 180 = South, 270 = West.
+                0 = North, 90 = East, 180 = South, 270 = West.
     :param speed: Base wind speed magnitude in m/s.
     :param speed_turbulence: Dimensionless relative turbulence intensity
-                             coefficient for speed variability.
+                            coefficient for speed variability.
     :param speed_deviation: Absolute deviation scale in m/s. Controls the
                             speed spread around the base wind speed.
     :param angle_turbulence: Dimensionless relative turbulence intensity
-                             coefficient for directional variability.
+                            coefficient for directional variability.
     :param angle_deviation: Absolute deviation scale in degrees. Controls
                             the angular spread around the base wind direction.
     :return: RocketPy Environment instance configured with the generated
-             custom atmospheric wind profile.
+            custom atmospheric wind profile.
     """
     
     cutoff = 0.05
@@ -1380,22 +1380,10 @@ def generate_nsy_wind_nsy_angle(lat, lon, elev, angle, speed, speed_turbulence, 
     return env
 
 def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, speeds_ref,
-                                   speed_turbulence=0.1, speed_deviation=2,
-                                   angle_turbulence=0.0, angle_deviation=0,
-                                   max_altitude=80000, dz=10):
+                                speed_turbulence=0.1, speed_deviation=2,
+                                angle_turbulence=0.0, angle_deviation=0,
+                                max_altitude=80000, dz=10):
     """
-    Genera un perfil de viento escalonado (por tramos constantes) con turbulencia.
-
-    heights_ref: lista de alturas base [m]
-    angles_ref: ángulos base [°] (convención meteorológica)
-    speeds_ref: velocidades base [m/s]
-    *_turbulence: intensidad relativa (0.1 = 10%)
-    *_deviation: desviación absoluta del ruido
-    max_altitude: altura máxima del perfil
-    dz: resolución vertical [m]
-    """
-
-"""
     Generate a layered atmospheric wind profile where each altitude band
     has its own base speed and direction, with optional stochastic
     perturbations applied independently per layer.
@@ -1403,21 +1391,8 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     The altitude domain is divided into layers defined by heights_ref
     breakpoints. Within each layer, the base speed and direction are held
     constant and perturbed by independent low-frequency filtered Gaussian
-    noise. Transitions between layers are discrete steps — no interpolation
-    is applied at layer boundaries. The final layer extends from
-    heights_ref[-1] to max_altitude.
-
-    This is the most physically complete wind model in the module. It
-    captures both atmospheric wind shear (layer-to-layer changes in speed
-    and direction) and intra-layer turbulence.
-
-    The wind components follow the meteorological convention:
-        u(z) = -v(z) * sin(radians(theta(z)))
-        v(z) = -v(z) * cos(radians(theta(z)))
-
-    where v(z) and theta(z) are the perturbed speed and direction profiles
-    computed per layer using normalized 2nd-order Butterworth low-pass
-    filtered Gaussian noise (cutoff frequency f_c = 0.05).
+    noise. Transitions between layers are discrete steps. The final layer
+    extends from heights_ref[-1] to max_altitude.
 
     :param lat: Launch site latitude in decimal degrees.
     :param lon: Launch site longitude in decimal degrees.
@@ -1425,28 +1400,28 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     :param heights_ref: List of altitude breakpoints in meters defining
                         layer boundaries. Must be in ascending order.
     :param angles_ref: List of base wind directions in degrees for each
-                       layer. Meteorological convention: 0 = North, 90 = East,
-                       180 = South, 270 = West. Must have the same length
-                       as heights_ref.
+                    layer. Meteorological convention: 0 = North, 90 = East,
+                    180 = South, 270 = West. Must have the same length
+                    as heights_ref.
     :param speeds_ref: List of base wind speeds in m/s for each layer.
-                       Must have the same length as heights_ref.
+                    Must have the same length as heights_ref.
     :param speed_turbulence: Dimensionless relative turbulence intensity
-                             coefficient for speed. Default: 0.1.
+                            coefficient for speed. Default: 0.1.
     :param speed_deviation: Absolute deviation scale in m/s for speed noise.
                             Default: 2.
     :param angle_turbulence: Dimensionless relative turbulence intensity
-                             coefficient for direction. Default: 0.0.
+                            coefficient for direction. Default: 0.0.
     :param angle_deviation: Absolute deviation scale in degrees for
                             directional noise. Default: 0.
     :param max_altitude: Maximum altitude of the generated profile in meters.
-                         Default: 80000.
+                        Default: 80000.
     :param dz: Altitude grid resolution in meters. Default: 10.
     :return: RocketPy Environment instance configured with the generated
-             layered custom atmospheric wind profile.
+            layered custom atmospheric wind profile.
     :raises ValueError: If heights_ref, angles_ref, and speeds_ref do not
                         have the same length.
     """
-    # Validación
+    # Validacion
     if len(heights_ref) != len(angles_ref) or len(heights_ref) != len(speeds_ref):
         raise ValueError("Heights, angles and speeds must have the same length")
 
@@ -1455,7 +1430,7 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     wind = np.zeros_like(heights, dtype=float)
     angle_wind = np.zeros_like(heights, dtype=float)
 
-    # Generador de ruido común
+    # Generador de ruido comun
     cutoff = 0.05
     b, a = butter(2, cutoff)
 
@@ -1463,7 +1438,7 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
         h_low = heights_ref[i]
         h_high = heights_ref[i + 1]
 
-        # Selección del tramo
+        # Seleccion del tramo
         mask = (heights >= h_low) & (heights < h_high)
 
         # Ruido blanco y filtrado por tramo
@@ -1473,7 +1448,7 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
         n_speed_filtered = filtfilt(b, a, n_speed)
         n_angle_filtered = filtfilt(b, a, n_angle)
 
-        # Normalización
+        # Normalizacion
         n_speed_filtered /= np.std(n_speed_filtered)
         n_angle_filtered /= np.std(n_angle_filtered)
 
@@ -1481,7 +1456,7 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
         wind[mask] = speeds_ref[i] + speed_deviation * speed_turbulence * n_speed_filtered
         angle_wind[mask] = angles_ref[i] + angle_deviation * angle_turbulence * n_angle_filtered
 
-    # Último tramo (por encima del último punto)
+    # Ultimo tramo (por encima del ultimo punto)
     mask_last = heights >= heights_ref[-1]
     n_speed = np.random.randn(np.count_nonzero(mask_last))
     n_angle = np.random.randn(np.count_nonzero(mask_last))
@@ -1495,7 +1470,7 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     wind[mask_last] = speeds_ref[-1] + speed_deviation * speed_turbulence * n_speed_filtered
     angle_wind[mask_last] = angles_ref[-1] + angle_deviation * angle_turbulence * n_angle_filtered
 
-    # Componentes U y V (convención meteorológica)
+    # Componentes U y V (convencion meteorologica)
     u = -wind * np.sin(np.radians(angle_wind))
     v = -wind * np.cos(np.radians(angle_wind))
 
@@ -1511,15 +1486,16 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     )
 
     env.set_atmospheric_model("custom_atmosphere",
-                              pressure=None,
-                              temperature=None,
-                              wind_u=wind_u,
-                              wind_v=wind_v)
+                            pressure=None,
+                            temperature=None,
+                            wind_u=wind_u,
+                            wind_v=wind_v)
 
     return env
 
 # ------ Funciones para gráficar
 def extract_map_data(sim):
+    
     """
     Extract the geographic trajectory of the rocket as parallel latitude
     and longitude arrays sampled across the full flight duration.
@@ -1540,7 +1516,7 @@ def extract_map_data(sim):
     return latitudes, longitudes
 
 
-def extract_rb_ind(sim):
+#def extract_rb_ind(sim):
     """
     Extract the time history of normal and shear forces on both rail
     buttons during the launch rail phase.

@@ -1,0 +1,63 @@
+{
+    "airframe": {
+        "name": "IREC_version_06(2)",
+        "coordinate_system_orientation": "nose_to_tail",
+        "radius": 0.087,
+        "mass": 27.363,
+        "inertia": [0.16, 0.16, 24.18, 0.0, 0.0, 0.0],
+        "power_off_drag": "parameters\\rocket\\drag_curve_IREC_Version_06 - SRAD(2) Cross.csv",
+        "power_on_drag": "parameters\\rocket\\drag_curve_IREC_Version_06 - SRAD(2) Cross.csv",
+        "center_of_mass_without_motor": 1.64,
+        "rocket_length": 3.23
+    },
+
+    "nosecone": {
+        "name": "Nose Cone Von Karman 5:1",
+        "kind": "Von Karman",
+        "length": 0.875,
+        "base_radius": 0.087,
+        "position": 0.0
+    },
+
+    "rail_buttons": {
+        "name": "Rail Button",
+        "angular_position": 135,
+        "distance": 1.01,        
+        "upper_position": 2.17
+    },
+
+    "fins": {    
+        "name": "Trapezoidal Fins",
+        "number": 4,
+        "section": "square",
+        "position": 2.84,
+        
+        "cant_angle": 0.0,
+        "root_chord": 0.25,
+        "tip_chord": 0.10,
+        "span": 0.174,
+        "sweep_length": 0.157
+    },
+
+    "parachutes": {
+        "main":  {
+            "area": 13.202543126711104,
+            "cd": 0.725,
+            "cds": 9.57184376686555,
+            "deploy_altitude": 450.0,
+            "deploy_delay": 0.0,
+            "deploy_event": "altitude",
+            "name": "SRAD Drogue-Main Cross Parachute + Deployment Bag"
+        },
+        "drogue": {
+            "area": 0.7853981633974483,
+            "cd": 0.725,
+            "cds": 0.56941366846315,
+            "deploy_altitude": "null",
+            "deploy_delay": 0.0,
+            "deploy_event": "apogee",
+            "name": "SRAD Pilot Parachute"
+        }
+    }
+
+}

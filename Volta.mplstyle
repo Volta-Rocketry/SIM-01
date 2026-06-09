@@ -1,0 +1,27 @@
+# volta_syle.mplstyle
+figure.figsize      : 6.5, 4.5
+figure.dpi          : 150
+
+font.family         : STIXGeneral
+font.size           : 12
+
+axes.titlesize      : 14
+axes.titleweight    : bold
+
+axes.labelsize      : 12
+axes.labelweight    : bold
+
+axes.prop_cycle     : cycler('color', ['EB5E24', '283747', 'BEC3C7', '1C8DBB', 'BDE7F8'])
+
+axes.grid           : True
+grid.alpha          : 0.3
+grid.linestyle      : --
+
+lines.linewidth     : 2.0
+lines.markersize    : 6
+
+legend.framealpha   : 0.8
+legend.fontsize     : 10
+
+savefig.dpi         : 600
+savefig.bbox        : tight

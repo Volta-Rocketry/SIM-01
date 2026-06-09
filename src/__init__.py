@@ -26,7 +26,6 @@ from .sims import (
 # --- Plotting / post-processing helpers ---
 from .sims import (
     extract_map_data,
-    extract_rb_ind,
 )
 
 # --- Motor parameter adjustment utilities ---

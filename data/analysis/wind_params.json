@@ -1,0 +1,257 @@
+{
+  "Ground\u20131 km": {
+    "alt_min_m": 0,
+    "alt_max_m": 1000,
+    "components": {
+      "u": {
+        "mean": -0.9392,
+        "std": 3.7216,
+        "p05": -6.4539,
+        "p25": -3.6731,
+        "p50_median": -1.4766,
+        "p75": 1.7284,
+        "p95": 5.6191,
+        "pct_above_mean": 44.97,
+        "pct_below_mean": 55.03,
+        "skewness": 0.1444,
+        "mc_dist": "normal",
+        "mc_mu": -0.9392,
+        "mc_sigma": 3.7216
+      },
+      "v": {
+        "mean": 1.7833,
+        "std": 2.931,
+        "p05": -2.9424,
+        "p25": -0.1707,
+        "p50_median": 1.8226,
+        "p75": 3.7343,
+        "p95": 6.615,
+        "pct_above_mean": 50.68,
+        "pct_below_mean": 49.32,
+        "skewness": -0.0134,
+        "mc_dist": "normal",
+        "mc_mu": 1.7833,
+        "mc_sigma": 2.931
+      },
+      "speed": {
+        "mean": 4.6486,
+        "std": 2.2094,
+        "p05": 1.4731,
+        "p25": 3.0491,
+        "p50_median": 4.3592,
+        "p75": 6.0104,
+        "p95": 8.7495,
+        "pct_above_mean": 45.03,
+        "pct_below_mean": 54.97,
+        "skewness": 0.131,
+        "mc_dist": "normal",
+        "mc_mu": 4.6486,
+        "mc_sigma": 2.2094
+      }
+    }
+  },
+  "1\u20133 km": {
+    "alt_min_m": 1000,
+    "alt_max_m": 3000,
+    "components": {
+      "u": {
+        "mean": 0.128,
+        "std": 5.0893,
+        "p05": -7.639,
+        "p25": -3.6571,
+        "p50_median": -0.2072,
+        "p75": 3.8666,
+        "p95": 8.6034,
+        "pct_above_mean": 47.91,
+        "pct_below_mean": 52.09,
+        "skewness": 0.0659,
+        "mc_dist": "normal",
+        "mc_mu": 0.128,
+        "mc_sigma": 5.0893
+      },
+      "v": {
+        "mean": 2.3899,
+        "std": 4.4219,
+        "p05": -4.2193,
+        "p25": -0.5859,
+        "p50_median": 2.0732,
+        "p75": 4.9822,
+        "p95": 10.4053,
+        "pct_above_mean": 46.93,
+        "pct_below_mean": 53.07,
+        "skewness": 0.0716,
+        "mc_dist": "normal",
+        "mc_mu": 2.3899,
+        "mc_sigma": 4.4219
+      },
+      "speed": {
+        "mean": 6.3366,
+        "std": 3.4135,
+        "p05": 1.8214,
+        "p25": 3.889,
+        "p50_median": 5.7017,
+        "p75": 8.1509,
+        "p95": 13.0543,
+        "pct_above_mean": 42.39,
+        "pct_below_mean": 57.61,
+        "skewness": 0.186,
+        "mc_dist": "normal",
+        "mc_mu": 6.3366,
+        "mc_sigma": 3.4135
+      }
+    }
+  },
+  "3\u20136 km": {
+    "alt_min_m": 3000,
+    "alt_max_m": 6000,
+    "components": {
+      "u": {
+        "mean": 2.2105,
+        "std": 6.3123,
+        "p05": -7.451,
+        "p25": -2.6413,
+        "p50_median": 1.9689,
+        "p75": 7.0286,
+        "p95": 12.4703,
+        "pct_above_mean": 49.21,
+        "pct_below_mean": 50.79,
+        "skewness": 0.0383,
+        "mc_dist": "normal",
+        "mc_mu": 2.2105,
+        "mc_sigma": 6.3123
+      },
+      "v": {
+        "mean": -0.1076,
+        "std": 4.8371,
+        "p05": -8.1966,
+        "p25": -3.4386,
+        "p50_median": 0.0758,
+        "p75": 3.099,
+        "p95": 7.8444,
+        "pct_above_mean": 51.48,
+        "pct_below_mean": 48.52,
+        "skewness": -0.0379,
+        "mc_dist": "normal",
+        "mc_mu": -0.1076,
+        "mc_sigma": 4.8371
+      },
+      "speed": {
+        "mean": 7.4441,
+        "std": 3.6014,
+        "p05": 2.3084,
+        "p25": 4.836,
+        "p50_median": 6.9888,
+        "p75": 9.6143,
+        "p95": 14.0918,
+        "pct_above_mean": 44.93,
+        "pct_below_mean": 55.07,
+        "skewness": 0.1264,
+        "mc_dist": "normal",
+        "mc_mu": 7.4441,
+        "mc_sigma": 3.6014
+      }
+    }
+  },
+  "6\u201310 km": {
+    "alt_min_m": 6000,
+    "alt_max_m": 10000,
+    "components": {
+      "u": {
+        "mean": 5.052,
+        "std": 9.9786,
+        "p05": -11.7648,
+        "p25": -0.9874,
+        "p50_median": 3.6443,
+        "p75": 12.2125,
+        "p95": 22.498,
+        "pct_above_mean": 44.91,
+        "pct_below_mean": 55.09,
+        "skewness": 0.1411,
+        "mc_dist": "normal",
+        "mc_mu": 5.052,
+        "mc_sigma": 9.9786
+      },
+      "v": {
+        "mean": -0.416,
+        "std": 7.3543,
+        "p05": -12.9914,
+        "p25": -4.6793,
+        "p50_median": 0.0342,
+        "p75": 4.1228,
+        "p95": 10.5965,
+        "pct_above_mean": 52.5,
+        "pct_below_mean": 47.5,
+        "skewness": -0.0612,
+        "mc_dist": "normal",
+        "mc_mu": -0.416,
+        "mc_sigma": 7.3543
+      },
+      "speed": {
+        "mean": 11.5229,
+        "std": 6.8861,
+        "p05": 2.214,
+        "p25": 5.7451,
+        "p50_median": 10.9865,
+        "p75": 15.8342,
+        "p95": 24.3093,
+        "pct_above_mean": 46.95,
+        "pct_below_mean": 53.05,
+        "skewness": 0.0779,
+        "mc_dist": "normal",
+        "mc_mu": 11.5229,
+        "mc_sigma": 6.8861
+      }
+    }
+  },
+  "10\u201315 km": {
+    "alt_min_m": 10000,
+    "alt_max_m": 15000,
+    "components": {
+      "u": {
+        "mean": 11.0097,
+        "std": 13.1765,
+        "p05": -8.7413,
+        "p25": 1.5129,
+        "p50_median": 8.8633,
+        "p75": 20.3163,
+        "p95": 35.9631,
+        "pct_above_mean": 45.15,
+        "pct_below_mean": 54.85,
+        "skewness": 0.1629,
+        "mc_dist": "normal",
+        "mc_mu": 11.0097,
+        "mc_sigma": 13.1765
+      },
+      "v": {
+        "mean": 1.3582,
+        "std": 7.5264,
+        "p05": -11.5404,
+        "p25": -3.5687,
+        "p50_median": 1.457,
+        "p75": 6.4242,
+        "p95": 13.9686,
+        "pct_above_mean": 50.71,
+        "pct_below_mean": 49.29,
+        "skewness": -0.0131,
+        "mc_dist": "normal",
+        "mc_mu": 1.3582,
+        "mc_sigma": 7.5264
+      },
+      "speed": {
+        "mean": 15.6886,
+        "std": 10.3985,
+        "p05": 2.5351,
+        "p25": 7.4402,
+        "p50_median": 13.9501,
+        "p75": 22.1587,
+        "p95": 37.6862,
+        "pct_above_mean": 44.39,
+        "pct_below_mean": 55.61,
+        "skewness": 0.1672,
+        "mc_dist": "normal",
+        "mc_mu": 15.6886,
+        "mc_sigma": 10.3985
+      }
+    }
+  }
+}
