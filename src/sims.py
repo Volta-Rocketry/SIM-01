@@ -19,7 +19,7 @@ class File_simulation():
     It acts as a high-level interface over RocketPy, allowing contributors
     to run simulations without interacting directly with low-level APIs.
     """
-    def __init__(self, file_name, motor_name):
+    def __init__(self, file_name, motor_name, cg_true, cp_true, mass_true):
         """
         Initialize the simulation object and construct the rocket.
 
@@ -34,6 +34,9 @@ class File_simulation():
         self.file_name = file_name
         self.motor_name = motor_name
         self.file_status = False
+        self.cg_true = cg_true
+        self.cp_true = cp_true
+        self.mass_true = mass_true
 
         self.rocket_ready_for_simulation = False
         self.env_ready_for_simulation = False
@@ -61,6 +64,7 @@ class File_simulation():
             raise ValueError("File or motor not verified")
                 
         self.create_rocket()
+        self.verify_rocket()
 
     def verify_file(self):
         """
@@ -69,7 +73,7 @@ class File_simulation():
         :return: True if the rocket configuration is supported.
         :raises ValueError: If the rocket configuration is not supported.
         """
-        files_supported = ["IREC_version1", "test", "AURORA_v02"]
+        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03"]
         if self.file_name in files_supported:
             return True
         else:
@@ -202,6 +206,40 @@ class File_simulation():
 
         self.rocket_ready_for_simulation = True
         print("Rocket created and ready for simulation")
+
+    def verify_rocket(self):
+        """
+    Verifies whether the RocketPy rocket matches the OpenRocket model
+    within predefined tolerances.
+
+    Parameters
+    ----------
+    cg_from_OR : float
+        Center of gravity from OpenRocket (meters, without motor).
+    mass_without_motor_OR : float
+        Structural mass from OpenRocket (kg).
+    cp_from_OR : float
+        rockets center of pressure position relative to user defined rocket 
+        reference system.
+
+    Raises
+    ------
+    ValueError
+        If the rocket parameters differ beyond allowed margins.
+    """
+
+        cg_from_OR = self.cg_true
+        mass_without_motor_OR = self.mass_true
+        cp_from_OR = self.cp_true
+        Margin_OF_Error_CG_CP = 0.02
+        Margin_OF_ERROR_MASS = 0.2
+        cp_from_RPY = self.rocket.cp_position(0)
+        cg_from_RPY = self.rocket.center_of_mass(0)
+        mass_without_motor_RPY = self.rocket.mass
+        
+        if abs(cg_from_OR - cg_from_RPY) <= Margin_OF_Error_CG_CP and abs(cp_from_OR - cp_from_RPY) <= Margin_OF_Error_CG_CP and abs(mass_without_motor_OR - mass_without_motor_RPY) <= Margin_OF_ERROR_MASS: 
+            print ("Your rocket have been verified")
+        else : raise ValueError("Your rocket doesn't match the one in rocketpy")
 
     def show_rocket_info(self):
         """
@@ -1183,6 +1221,38 @@ def generate_nsy_wind_cte_angle(lat, lon, elev, angle, speed, turbulence, deviat
     return env
 
 def generate_cte_wind_nsy_angle(lat, lon, elev, angle, speed, turbulence, deviation):
+    """
+    Generate an atmospheric environment with constant wind speed and
+    stochastically varying wind direction across altitude.
+
+    Wind direction is perturbed at each altitude sample using low-frequency
+    filtered Gaussian noise, producing smooth and spatially correlated
+    directional variability. Wind speed remains fixed at all altitudes.
+    This model isolates the effect of directional uncertainty while keeping
+    aerodynamic loading magnitude constant throughout the flight.
+
+    The wind components follow the meteorological convention:
+        u(z) = -speed * sin(radians(theta(z)))
+        v(z) = -speed * cos(radians(theta(z)))
+
+    where theta(z) = angle + deviation * turbulence * n_filtered(z),
+    and n_filtered is a normalized 2nd-order Butterworth low-pass filtered
+    Gaussian signal (cutoff frequency f_c = 0.05).
+
+    :param lat: Launch site latitude in decimal degrees.
+    :param lon: Launch site longitude in decimal degrees.
+    :param elev: Launch site elevation above sea level in meters.
+    :param angle: Base wind direction in degrees. Meteorological convention:
+                  0 = North, 90 = East, 180 = South, 270 = West.
+    :param speed: Wind speed magnitude in m/s, constant at all altitudes.
+    :param turbulence: Dimensionless relative turbulence intensity coefficient.
+                       Scales the amplitude of the filtered directional noise.
+    :param deviation: Absolute deviation scale in degrees. Controls the
+                      angular spread of the perturbation around the base angle.
+    :return: RocketPy Environment instance configured with the generated
+             custom atmospheric wind profile.
+    """    
+    
     cutoff = 0.05
     heights = np.arange(0, 80000, 10)
     
@@ -1223,6 +1293,51 @@ def generate_cte_wind_nsy_angle(lat, lon, elev, angle, speed, turbulence, deviat
     return env
 
 def generate_nsy_wind_nsy_angle(lat, lon, elev, angle, speed, speed_turbulence, speed_deviation, angle_turbulence, angle_deviation):
+    """
+    Generate an atmospheric environment where both wind speed and wind
+    direction vary independently with altitude using stochastic low-frequency
+    noise.
+
+    Two independent Gaussian noise signals are generated and filtered
+    separately — one for speed and one for direction — producing spatially
+    correlated but statistically independent perturbations. Speed variability
+    directly affects the dynamic pressure of the crosswind component, scaling
+    aerodynamic lateral forces non-linearly. This is the most general
+    single-layer non-symmetric model and is the appropriate choice for
+    full turbulence dispersion and structural load uncertainty studies.
+
+    The wind components follow the meteorological convention:
+        u(z) = -v(z) * sin(radians(theta(z)))
+        w(z) = -v(z) * cos(radians(theta(z)))
+
+    where:
+        v(z)     = speed + speed_deviation * speed_turbulence * n_speed(z)
+        theta(z) = angle + angle_deviation * angle_turbulence * n_angle(z)
+
+    and n_speed, n_angle are independent normalized 2nd-order Butterworth
+    low-pass filtered Gaussian signals (cutoff frequency f_c = 0.05).
+
+    Setting speed_turbulence = 0 and speed_deviation = 0 reduces this
+    function to the behavior of generate_cte_wind_nsy_angle.
+
+    :param lat: Launch site latitude in decimal degrees.
+    :param lon: Launch site longitude in decimal degrees.
+    :param elev: Launch site elevation above sea level in meters.
+    :param angle: Base wind direction in degrees. Meteorological convention:
+                  0 = North, 90 = East, 180 = South, 270 = West.
+    :param speed: Base wind speed magnitude in m/s.
+    :param speed_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for speed variability.
+    :param speed_deviation: Absolute deviation scale in m/s. Controls the
+                            speed spread around the base wind speed.
+    :param angle_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for directional variability.
+    :param angle_deviation: Absolute deviation scale in degrees. Controls
+                            the angular spread around the base wind direction.
+    :return: RocketPy Environment instance configured with the generated
+             custom atmospheric wind profile.
+    """
+    
     cutoff = 0.05
     heights = np.arange(0, 80000, 10)
     
@@ -1280,6 +1395,57 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
     dz: resolución vertical [m]
     """
 
+"""
+    Generate a layered atmospheric wind profile where each altitude band
+    has its own base speed and direction, with optional stochastic
+    perturbations applied independently per layer.
+
+    The altitude domain is divided into layers defined by heights_ref
+    breakpoints. Within each layer, the base speed and direction are held
+    constant and perturbed by independent low-frequency filtered Gaussian
+    noise. Transitions between layers are discrete steps — no interpolation
+    is applied at layer boundaries. The final layer extends from
+    heights_ref[-1] to max_altitude.
+
+    This is the most physically complete wind model in the module. It
+    captures both atmospheric wind shear (layer-to-layer changes in speed
+    and direction) and intra-layer turbulence.
+
+    The wind components follow the meteorological convention:
+        u(z) = -v(z) * sin(radians(theta(z)))
+        v(z) = -v(z) * cos(radians(theta(z)))
+
+    where v(z) and theta(z) are the perturbed speed and direction profiles
+    computed per layer using normalized 2nd-order Butterworth low-pass
+    filtered Gaussian noise (cutoff frequency f_c = 0.05).
+
+    :param lat: Launch site latitude in decimal degrees.
+    :param lon: Launch site longitude in decimal degrees.
+    :param elev: Launch site elevation above sea level in meters.
+    :param heights_ref: List of altitude breakpoints in meters defining
+                        layer boundaries. Must be in ascending order.
+    :param angles_ref: List of base wind directions in degrees for each
+                       layer. Meteorological convention: 0 = North, 90 = East,
+                       180 = South, 270 = West. Must have the same length
+                       as heights_ref.
+    :param speeds_ref: List of base wind speeds in m/s for each layer.
+                       Must have the same length as heights_ref.
+    :param speed_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for speed. Default: 0.1.
+    :param speed_deviation: Absolute deviation scale in m/s for speed noise.
+                            Default: 2.
+    :param angle_turbulence: Dimensionless relative turbulence intensity
+                             coefficient for direction. Default: 0.0.
+    :param angle_deviation: Absolute deviation scale in degrees for
+                            directional noise. Default: 0.
+    :param max_altitude: Maximum altitude of the generated profile in meters.
+                         Default: 80000.
+    :param dz: Altitude grid resolution in meters. Default: 10.
+    :return: RocketPy Environment instance configured with the generated
+             layered custom atmospheric wind profile.
+    :raises ValueError: If heights_ref, angles_ref, and speeds_ref do not
+                        have the same length.
+    """
     # Validación
     if len(heights_ref) != len(angles_ref) or len(heights_ref) != len(speeds_ref):
         raise ValueError("Heights, angles and speeds must have the same length")
@@ -1354,6 +1520,20 @@ def generate_variable_wind_profile(lat, lon, elev, heights_ref, angles_ref, spee
 
 # ------ Funciones para gráficar
 def extract_map_data(sim):
+    """
+    Extract the geographic trajectory of the rocket as parallel latitude
+    and longitude arrays sampled across the full flight duration.
+
+    This helper retrieves pre-computed geographic position arrays from a
+    completed RocketPy Flight object. The output is intended for ground
+    track plotting and horizontal displacement analysis. No simulation
+    logic is re-executed.
+
+    :param sim: Completed RocketPy Flight simulation object.
+    :return: Tuple (latitudes, longitudes) where both are array-like of
+            shape (N,) in decimal degrees, sharing the same index
+            correspondence across all N recorded time steps.
+    """
     latitudes = sim.latitude_array
     longitudes = sim.longitude_array
 
@@ -1361,6 +1541,32 @@ def extract_map_data(sim):
 
 
 def extract_rb_ind(sim):
+    """
+    Extract the time history of normal and shear forces on both rail
+    buttons during the launch rail phase.
+
+    Rail buttons are the mechanical interface between the rocket and the
+    launch rail. This helper retrieves the raw force time-series from the
+    internal source arrays of RocketPy's Function objects for both the
+    upper (rb1) and lower (rb2) rail buttons. The output is intended for
+    structural load analysis, margin-of-safety evaluation, and force
+    profile plotting.
+
+    Force data is physically meaningful only during the rail phase, from
+    launch until rail exit. Values recorded after sim.out_of_rail_time
+    should be disregarded for structural analysis purposes.
+
+    rb1 refers to the upper rail button and rb2 to the lower rail button,
+    consistent with the position convention defined in
+    File_simulation.create_rocket().
+
+    :param sim: Completed RocketPy Flight simulation object containing
+                rail button force data recorded during the rail phase.
+    :return: Tuple (t, rb1_normal_force, rb1_shear_force,
+            rb2_normal_force, rb2_shear_force) where all five are
+            numpy.ndarray of shape (N,). Time t is in seconds.
+            Force arrays are in Newtons and share the same time index.
+    """
     rb1_normal_force = sim.rail_button1_normal_force.source[:,1]
     rb1_shear_force = sim.rail_button1_shear_force.source[:,1]
     rb2_normal_force = sim.rail_button2_normal_force.source[:,1]
