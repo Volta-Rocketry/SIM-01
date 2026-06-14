@@ -622,5 +622,5 @@ if __name__ == "__main__":
         cp_true=2.48,
         mass_true=27.363,
         motor_name="AeroTech_N3300R",
-        n_simulations=20,
+        n_simulations=1000,
     )
