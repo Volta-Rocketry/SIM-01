@@ -4,9 +4,9 @@
         "coordinate_system_orientation": "nose_to_tail",
         "radius": 0.087,
         "mass": 24.944,
-        "inertia": [0.154, 0.154, 22.476, 0.0, 0.0, 0.0],
-        "power_off_drag": "parameters\\rocket\\drag_curve_PR3 - IREC_Version_07 - Final Update.csv",
-        "power_on_drag": "parameters\\rocket\\drag_curve_PR3 - IREC_Version_07 - Final Update.csv",
+        "inertia": [0.151, 0.151, 22.375, 0.0, 0.0, 0.0],
+        "power_off_drag": "parameters\\rocket\\drag_curve_IREC_Version_08 - Final Update.csv",
+        "power_on_drag": "parameters\\rocket\\drag_curve_IREC_Version_08 - Final Update.csv",
         "center_of_mass_without_motor": 1.61,
         "rocket_length": 3.23
     },

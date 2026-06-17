@@ -73,7 +73,7 @@ class File_simulation():
         :return: True if the rocket configuration is supported.
         :raises ValueError: If the rocket configuration is not supported.
         """
-        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03", "IREC_version04","IREC_version_06(2)"]
+        files_supported = ["IREC_version1", "test", "AURORA_v02", "IREC_version03", "IREC_version04","IREC_version_06(2)","IREC_version_08"]
         if self.file_name in files_supported:
             return True
         else:
