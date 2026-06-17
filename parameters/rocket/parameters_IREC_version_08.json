@@ -3,11 +3,11 @@
         "name": "IREC_version_06(2)",
         "coordinate_system_orientation": "nose_to_tail",
         "radius": 0.087,
-        "mass": 26.341,
+        "mass": 24.944,
         "inertia": [0.154, 0.154, 22.476, 0.0, 0.0, 0.0],
         "power_off_drag": "parameters\\rocket\\drag_curve_PR3 - IREC_Version_07 - Final Update.csv",
         "power_on_drag": "parameters\\rocket\\drag_curve_PR3 - IREC_Version_07 - Final Update.csv",
-        "center_of_mass_without_motor": 1.59,
+        "center_of_mass_without_motor": 1.61,
         "rocket_length": 3.23
     },
 

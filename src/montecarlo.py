@@ -2,6 +2,7 @@ from src.sims import File_simulation
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from rocketpy import Flight, MonteCarlo, Environment, Function
+import datetime
 from rocketpy.stochastic import (
     StochasticEnvironment,
     StochasticFlight,
@@ -62,65 +63,18 @@ def run_montecarlo_test(
     # =========================================================
     # Mantengo tu configuración base y le agrego un perfil de viento
     # más realista con variación con la altura.
-    avg_env = Environment(
+    env = Environment(
         latitude=32.990254,
         longitude=-106.974998,
         elevation=890,
     )
 
-    avg_env.set_atmospheric_model(
-        type="standard_atmosphere"
+    launch_date = datetime.datetime.now() + datetime.timedelta(days=2)
+    env.set_date(
+        (launch_date.year, launch_date.month, launch_date.day, 13),
+        timezone="UTC",
     )
-
-    # Viento promedio derivado del análisis histórico:
-    # - cerca del suelo: ~4.6 m/s
-    # - en altura/apogeo: ~11.5 m/s
-    # - componente norte pequeña al inicio y casi nula al subir
-    # - componente este dominante en altura
-    heights = np.array([
-        0,
-        100,
-        500,
-        1000,
-        2000,
-        3000,
-        5000,
-        8000,
-        10000,
-        15000,
-    ], dtype=float)
-
-    # X = Este, Y = Norte
-    wind_u = np.array([   # componente Este
-        3.8,
-        4.0,
-        4.5,
-        5.0,
-        5.5,
-        6.0,
-        7.5,
-        9.0,
-        10.0,
-        11.5,
-    ], dtype=float)
-
-    wind_v = np.array([   # componente Norte
-        1.8,
-        1.6,
-        1.3,
-        1.0,
-        0.7,
-        0.5,
-        0.3,
-        0.15,
-        0.08,
-        0.00,
-    ], dtype=float)
-
-    avg_env.process_custom_atmosphere(
-        wind_u=list(zip(heights, wind_u)),
-        wind_v=list(zip(heights, wind_v)),
-    )
+    env.set_atmospheric_model(type="Forecast", file="GFS")
 
     # =========================================================
     # 4. BASE FLIGHT
@@ -129,7 +83,7 @@ def run_montecarlo_test(
         rocket=sim.rocket,
         environment=avg_env,
         rail_length=5.2,
-        inclination=90,
+        inclination=84,
         heading=90,
     )
 
@@ -196,7 +150,7 @@ def run_montecarlo_test(
     # =========================================================
     stochastic_flight = StochasticFlight(
         flight=base_flight,
-        inclination=(90, 0.5),
+        inclination=(84, 1),
         heading=(90, 2),
     )
 
@@ -618,9 +572,9 @@ def run_montecarlo_test(
 if __name__ == "__main__":
     run_montecarlo_test(
         rocket_file="IREC_version_06(2)",
-        cg_true=1.98,
+        cg_true=1.96,
         cp_true=2.48,
-        mass_true=27.363,
+        mass_true=26.341,
         motor_name="AeroTech_N3300R",
-        n_simulations=1000,
+        n_simulations=20,
     )
